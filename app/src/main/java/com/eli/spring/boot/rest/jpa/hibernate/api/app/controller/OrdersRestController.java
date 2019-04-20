@@ -1,5 +1,11 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
+import java.util.List;
+
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Order;
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.OrderService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/orders")
 public class OrdersRestController {
 
+    @Autowired
+    private OrderService orderService;
+
     @GetMapping({ "/", "" })
     public ResponseEntity<?> getOrders() {
         System.err.println("\n\n\nget orders\n\n\n");
-        return new ResponseEntity<>("get orders",HttpStatus.OK);
+        List<Order> orders = orderService.findAll();
+        return new ResponseEntity<>(orders,HttpStatus.OK);
     }
 
     @GetMapping("/order/{id}")

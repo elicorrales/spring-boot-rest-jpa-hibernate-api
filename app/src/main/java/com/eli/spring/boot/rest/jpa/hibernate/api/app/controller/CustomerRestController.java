@@ -1,9 +1,12 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
+import java.util.List;
+
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
-
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.model.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +28,8 @@ public class CustomerRestController {
     @GetMapping({ "/", "" })
     public ResponseEntity<?> getCustomers() {
         System.err.println("\n\n\nget customers\n\n\n");
-        return new ResponseEntity<>("get customers",HttpStatus.OK);
+        List<Customer> customers = customerService.findAll();
+        return new ResponseEntity<>(customers,HttpStatus.OK);
     }
 
     @GetMapping("/customer/{id}")
@@ -37,8 +41,12 @@ public class CustomerRestController {
     @PostMapping("/customer")
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         System.err.println("\n\n\n add customer " + customer + "\n\n\n");
-        int newCustomerId = customerService.addCustomer(customer);
-        return new ResponseEntity<>("added customer " + customer + ", id = " + newCustomerId + "\n",HttpStatus.OK);
+        try {
+            int newCustomerId = customerService.addCustomer(customer);
+            return new ResponseEntity<>("added customer " + customer + ", id = " + newCustomerId + "\n",HttpStatus.OK);
+        } catch (DataIntegrityViolationException e) {
+            return new ResponseEntity<>(new ErrorResponse("Already Exists"),HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/customer")
