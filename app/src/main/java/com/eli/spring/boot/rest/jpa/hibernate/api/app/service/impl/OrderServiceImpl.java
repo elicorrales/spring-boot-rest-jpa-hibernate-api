@@ -19,4 +19,9 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public Order getOrder(int id) {
+        return repository.getOne(id);
+    }
 }

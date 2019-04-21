@@ -3,7 +3,9 @@ package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 import java.util.List;
 
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Order;
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.model.MessageResponse;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.OrderService;
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.utils.ExceptionStackRootCause;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +30,15 @@ public class OrdersRestController {
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<?> getOrder(@PathVariable String id) {
+    public ResponseEntity<?> getOrder(@PathVariable int id) {
         System.err.println("\n\n\n get order id " + id + "\n\n\n");
-        return new ResponseEntity<>("get order " + id + "\n",HttpStatus.OK);
+        try {
+            Order order = orderService.getOrder(id);
+            return new ResponseEntity<>(order,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
 }

@@ -8,4 +8,6 @@ public interface CustomerService {
 
     int addCustomer(Customer customer);
     List<Customer> findAll();
+    Customer getCustomer(int id);
+    Customer updateCustomer(Customer customer);
 }
