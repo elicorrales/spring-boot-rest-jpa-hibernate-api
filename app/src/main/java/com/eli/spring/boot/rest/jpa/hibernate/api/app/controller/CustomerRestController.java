@@ -37,9 +37,14 @@ public class CustomerRestController {
     }
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<?> getCustomer(@PathVariable String id) {
+    public ResponseEntity<?> getCustomer(@PathVariable int id) {
         System.err.println("\n\n\n get customer id " + id + "\n\n\n");
-        return new ResponseEntity<>("get customer " + id + "\n",HttpStatus.OK);
+        try {
+            Customer customer = customerService.getCustomer(id);
+            return new ResponseEntity<>(customer,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("/customer")
@@ -48,8 +53,6 @@ public class CustomerRestController {
         try {
             int newCustomerId = customerService.addCustomer(customer);
             return new ResponseEntity<>("Added customer " + customer + ", id = " + newCustomerId + "\n",HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            return new ResponseEntity<>(new MessageResponse("Already Exists"),HttpStatus.CONFLICT);
         } catch (Exception e) {
             return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.CONFLICT);
         }
