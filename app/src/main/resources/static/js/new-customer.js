@@ -18,10 +18,23 @@ const onSubmitNewCustomerBtnClickDoSubmitNewCustomer = (event) => {
     )
     .catch(
         error => {
-            let msg = error.response;
-            msg = error.response.data;
-            msg = error.response.data.message;
-            let message = error.response && error.response.data && error.response.data.message ? error.response.data.message:error;
+            let message = '';
+            if (error.response) {
+                if (error.response.data) {
+                    if (error.response.data.message) {
+                        message = error.response.data.message;
+                    } else if (error.response.data.length > 0) {
+                        error.response.data.forEach(x => { message += x + '<br/>'});
+                    } else {
+                        message = error.response.data;
+                    }
+
+                } else {
+                    message = error.response;
+                }
+            } else {
+                message = error;
+            }
             app.alerts.displayMessage('danger',message);
         }
     );

@@ -11,8 +11,12 @@ const displayCustomer = (idx, customer) => {
         + '    <td id="custFname-' + customer.id + '">' + customer.fname + '</td>'
         + '    <td id="custLname-' + customer.id + '">' + customer.lname + '</td>'
         + '    <td id="custEmail-' + customer.id + '">' + customer.email + '</td>'
-        + '    <td><a href="" onclick="onEditCustomerClickDoEditCustomer(event,'+customer.id+')"><span class="glyphicon glyphicon-edit"></span></a></td>'
-        + '    <td><a href="" onclick="onDeleteCustomerClickDoDeleteCustomer(event,'+customer.id+')"><span class="glyphicon glyphicon-trash"></span></a></td>'
+        //+ '    <td><a href="" onclick="onEditCustomerClickDoEditCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-pencil"></i> </span></a></td>'
+        //+ '    <td><a href="" onclick="onDeleteCustomerClickDoDeleteCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-trash"></i> </span></a></td>'
+        //+ '    <td><a href="" onclick="onGoToCustomerOrdersClickDoGoToCustomerOrders(event,'+customer.id+')"> <i class="glyphicon glyphicon-usd"></i> </span></a></td>'
+        + '    <td><h5><a href="" onclick="onEditCustomerClickDoEditCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-pencil"></i> </a> '
+        + '    <a href="" onclick="onDeleteCustomerClickDoDeleteCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-trash"></i> </a> '
+        + '    <a href="" onclick="onCustomerOrdersClickDoCustomerOrders(event,'+customer.id+')"> <i class="glyphicon glyphicon-usd"></i> </a></h5></td>'
         + '</tr>';
 
     return html;

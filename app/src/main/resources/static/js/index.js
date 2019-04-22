@@ -2,16 +2,21 @@
 
 var app = {};
 
+const customerOverallSectionElem = document.getElementById('customerOverallSection');
 const customerListSectionElem = document.getElementById('customerListSection');
 const newCustomerSectionElem = document.getElementById('newCustomerSection');
 const editCustomerSectionElem = document.getElementById('editCustomerSection');
 const deleteCustomerSectionElem = document.getElementById('deleteCustomerSection');
+
+const customerOverallOrderSectionElem = document.getElementById('customerOverallOrderSection');
+const customerOrderListHeadingElem = document.getElementById('customerOrderListHeading');
 
 const showCustomerListSection = () => {
     customerListSectionElem.style.display = 'block';
     newCustomerSectionElem.style.display = 'none';
     editCustomerSectionElem.style.display = 'none';
     deleteCustomerSectionElem.style.display = 'none';
+    customerOverallOrderSectionElem.style.display = 'none';
     app.customerList.getCustomerList();
 }
 
@@ -34,10 +39,10 @@ const onAddCustomerBtnClickDoAddCustomer = () => {
 const onEditCustomerClickDoEditCustomer = (event,id) => {
     event.preventDefault();
     app.alerts.hideMessage();
-    let custId = document.getElementById('custId-'+id).innerText;
-    let custFname = document.getElementById('custFname-'+id).innerText;
-    let custLname = document.getElementById('custLname-'+id).innerText;
-    let custEmail = document.getElementById('custEmail-'+id).innerText;
+    let custId = document.getElementById('custId-'+id).value;
+    let custFname = document.getElementById('custFname-'+id).value;
+    let custLname = document.getElementById('custLname-'+id).value;
+    let custEmail = document.getElementById('custEmail-'+id).value;
     //app.alerts.displayMessage('info', custId + ','+custFname+','+custLname);
     app.hideCustomerListSection('forEdit');
     let customer = {};
@@ -51,10 +56,10 @@ const onEditCustomerClickDoEditCustomer = (event,id) => {
 const onDeleteCustomerClickDoDeleteCustomer = (event,id) => {
     event.preventDefault();
     app.alerts.hideMessage();
-    let custId = document.getElementById('custId-'+id).innerText;
-    let custFname = document.getElementById('custFname-'+id).innerText;
-    let custLname = document.getElementById('custLname-'+id).innerText;
-    let custEmail = document.getElementById('custEmail-'+id).innerText;
+    let custId = document.getElementById('custId-'+id).value;
+    let custFname = document.getElementById('custFname-'+id).value;
+    let custLname = document.getElementById('custLname-'+id).value;
+    let custEmail = document.getElementById('custEmail-'+id).value;
     //app.alerts.displayMessage('info', custId + ','+custFname+','+custLname);
     app.hideCustomerListSection('forDelete');
     let customer = {};
@@ -65,11 +70,20 @@ const onDeleteCustomerClickDoDeleteCustomer = (event,id) => {
     app.customerDelete.deleteCustomer(customer);
 }
 
-const onCancelDeleteCustomerBtnClickDoCancelDeleteCustomer = (event) => {
+const onCancelBtnClickDoCancel = (event,what) => {
     event.preventDefault();
     app.alerts.hideMessage();
-    app.alerts.displayMessage('warning', 'Delete Canceled');
+    app.alerts.displayMessage('warning', '"' + what + '" Canceled');
     app.showCustomerListSection();
+}
+
+const onCustomerOrdersClickDoCustomerOrders = (event,id) => {
+    event.preventDefault();
+    customerOverallSectionElem.style.display = 'none';
+    customerOverallOrderSectionElem.style.display = 'block';
+    let custFname = document.getElementById('custFname-'+id).value;
+    let custLname = document.getElementById('custLname-'+id).value;
+    customerOrderListHeadingElem.innerHTML = custFname + ' ' + custLname;
 }
 
 app.showCustomerListSection = showCustomerListSection;
