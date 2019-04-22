@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="customer")
@@ -23,10 +24,13 @@ public class Customer {
     @Column(name="id")
     private int id;
     @Column(name="fname")
+    @NotEmpty(message="First Name May Not Be Empty")
     private String fname;
     @Column(name="lname")
+    @NotEmpty(message="Last Name May Not Be Empty")
     private String lname;
     @Column(name="email")
+    @NotEmpty(message="Email May Not Be Empty")
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -72,7 +72,7 @@
                 <div class="panel-body">
                     <table class="table table-striped table-hover">
                         <thead>
-                            <th class="col-sm-1">#</th>
+                            <th class="col-sm-1">id</th>
                             <th class="col-sm-2">First</th>
                             <th class="col-sm-2">Last</th>
                             <th class="col-sm-2">Email</th>
@@ -87,9 +87,60 @@
                 </div>
             </div>
 
-            <div id="editCustomer">
+            <div style="display:none" id="editCustomerSection" class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title pull-left">Edit Customer</div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <input id="editIdInput" type="hidden"/>
+                        <div class="form-group">
+                            <label for="editFnameInput">First Name:</label>
+                            <input id="editFnameInput" name="editFnameInput" type="text" placeholder="First Name Here.." autofocus />
+                        </div>
+                        <div class="form-group">
+                            <label for="editLnameInput">Last Name:</label>
+                            <input id="editLnameInput" name="editLnameInput" type="text" placeholder="Last Name Here.." />
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmailInput">Email:</label>
+                            <input id="editEmailInput" name="editEmailInput" type="text" placeholder="Email Here.." />
+                        </div>
+                        <button id="submitUpdateCustomerBtn" type="submit" class="btn btn-primary" 
+                                onclick="onSubmitUpdateCustomerBtnClickDoSubmitUpdateCustomer(event)">Submit</button>
+                    </form>
+                </div>
             </div>
-            <div id="deleteCustomer">
+
+            <div style="display:none" id="deleteCustomerSection" class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title pull-left">Delete Customer</div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <input id="deleteIdInput" type="hidden"/>
+                        <div class="form-group">
+                            <label for="deleteFnameInput">First Name:</label>
+                            <input id="deleteFnameInput" name="deleteFnameInput" type="text" placeholder="First Name Here.." disabled/>
+                        </div>
+                        <div class="form-group">
+                            <label for="deleteLnameInput">Last Name:</label>
+                            <input id="deleteLnameInput" name="deleteLnameInput" type="text" placeholder="Last Name Here.." disabled/>
+                        </div>
+                        <div class="form-group">
+                            <label for="deleteEmailInput">Email:</label>
+                            <input id="deleteEmailInput" name="deleteEmailInput" type="text" placeholder="Email Here.." disabled/>
+                        </div>
+                        <button id="submitDeleteCustomerBtn" type="submit" class="btn btn-primary" 
+                                onclick="onSubmitDeleteCustomerBtnClickDoSubmitDeleteCustomer(event)" >Submit</button>
+                        <button id="cancelDeleteCustomerBtn" type="button" class="btn btn-primary" 
+                                onclick="onCancelDeleteCustomerBtnClickDoCancelDeleteCustomer(event)" autofocus>Cancel</button>
+
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -108,4 +159,5 @@
 <script src="js/orders.js"></script>
 <script src="js/new-customer.js"></script>
 <script src="js/customer-list.js"></script>
+<script src="js/customer-delete.js"></script>
 </html>

@@ -4,8 +4,6 @@ const fnameInputElem = document.getElementById('fnameInput');
 const lnameInputElem = document.getElementById('lnameInput');
 const emailInputElem = document.getElementById('emailInput');
 
-var newCustomer = {};
-
 const onSubmitNewCustomerBtnClickDoSubmitNewCustomer = (event) => {
     event.preventDefault();
     let fname = fnameInputElem.value;
@@ -30,5 +28,3 @@ const onSubmitNewCustomerBtnClickDoSubmitNewCustomer = (event) => {
 
 }
 
-
-app.newCustomer = newCustomer;

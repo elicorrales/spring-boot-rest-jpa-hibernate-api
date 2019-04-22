@@ -3,15 +3,16 @@ const customerListAreaElem = document.getElementById('customerListArea');
 
 var customerList = {};
 
+
 const displayCustomer = (idx, customer) => {
     let html = ''
         + '<tr>'
-        + '    <td>' + idx + '</td>'
-        + '    <td>' + customer.fname + '</td>'
-        + '    <td>' + customer.lname + '</td>'
-        + '    <td>' + customer.email + '</td>'
-        + '    <td><span class="glyphicon glyphicon-edit"></span></td>'
-        + '    <td><span class="glyphicon glyphicon-trash"></span></td>'
+        + '    <td id="custId-' + customer.id + '">' + customer.id + '</td>'
+        + '    <td id="custFname-' + customer.id + '">' + customer.fname + '</td>'
+        + '    <td id="custLname-' + customer.id + '">' + customer.lname + '</td>'
+        + '    <td id="custEmail-' + customer.id + '">' + customer.email + '</td>'
+        + '    <td><a href="" onclick="onEditCustomerClickDoEditCustomer(event,'+customer.id+')"><span class="glyphicon glyphicon-edit"></span></a></td>'
+        + '    <td><a href="" onclick="onDeleteCustomerClickDoDeleteCustomer(event,'+customer.id+')"><span class="glyphicon glyphicon-trash"></span></a></td>'
         + '</tr>';
 
     return html;

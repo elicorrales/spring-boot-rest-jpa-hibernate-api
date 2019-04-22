@@ -1,6 +1,11 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Order;
@@ -60,6 +65,11 @@ public class CustomerRestController {
         try {
             int newCustomerId = customerService.addCustomer(customer);
             return new ResponseEntity<>("Added customer " + customer + ", id = " + newCustomerId + "\n",HttpStatus.OK);
+        } catch (ConstraintViolationException e) {
+            Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+            List<String> messages = new ArrayList<>();
+            violations.stream().forEach( action -> { System.err.println(messages.add(action.getMessage())); });
+            return new ResponseEntity<>(messages,HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
