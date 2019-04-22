@@ -2,6 +2,8 @@ package com.eli.spring.boot.rest.jpa.hibernate.api.app.service.impl;
 
 import java.util.List;
 
+import javax.validation.OverridesAttribute;
+
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.repository.CustomerJpaRepository;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
@@ -34,5 +36,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer updateCustomer(Customer customer) {
         return repository.save(customer);
+    }
+
+    @Override
+    public void deleteCustomer(int id) {
+        repository.deleteById(id);
     }
 }

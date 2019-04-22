@@ -21,6 +21,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAllOrdersForCustomer(int id) {
+        return repository.findByCustomerId(id);
+    }
+
+    @Override
     public Order getOrder(int id) {
         return repository.getOne(id);
     }

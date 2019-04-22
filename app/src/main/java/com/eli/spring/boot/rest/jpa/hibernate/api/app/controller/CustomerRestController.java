@@ -9,7 +9,6 @@ import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.utils.ExceptionStackRootCause;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +31,14 @@ public class CustomerRestController {
     @GetMapping({ "/", "" })
     public ResponseEntity<?> getCustomers() {
         System.err.println("\n\n\nget customers\n\n\n");
-        List<Customer> customers = customerService.findAll();
-        return new ResponseEntity<>(customers,HttpStatus.OK);
+        try {
+            List<Customer> customers = customerService.findAll();
+            return new ResponseEntity<>(customers,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/customer/{id}")
@@ -43,7 +48,9 @@ public class CustomerRestController {
             Customer customer = customerService.getCustomer(id);
             return new ResponseEntity<>(customer,HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.CONFLICT);
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -54,7 +61,9 @@ public class CustomerRestController {
             int newCustomerId = customerService.addCustomer(customer);
             return new ResponseEntity<>("Added customer " + customer + ", id = " + newCustomerId + "\n",HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.CONFLICT);
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -78,13 +87,27 @@ public class CustomerRestController {
     @PutMapping("/customer")
     public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
         System.err.println("\n\n\n update customer " + customer + "\n\n\n");
-        return new ResponseEntity<>("update customer " + customer + "\n",HttpStatus.OK);
+        try {
+            Customer updated = customerService.updateCustomer(customer);
+            return new ResponseEntity<>(new MessageResponse("Updated customer " + customer + ", id = " + updated.getId()),HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/customer/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable int id) {
         System.err.println("\n\n\n delete customer " + id + "\n\n\n");
-        return new ResponseEntity<>("delete customer " + id + "\n",HttpStatus.OK);
+        try {
+            customerService.deleteCustomer(id);
+            return new ResponseEntity<>( new MessageResponse("Deleted customer  id = " + id), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

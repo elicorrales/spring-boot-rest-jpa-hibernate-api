@@ -29,6 +29,19 @@ public class OrdersRestController {
         return new ResponseEntity<>(orders,HttpStatus.OK);
     }
 
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<?> getOrdersForCustomer(@PathVariable int id) {
+        System.err.println("\n\n\nget customer " + id + " orders\n\n\n");
+        try {
+            List<Order> orders = orderService.findAllOrdersForCustomer(id);
+            return new ResponseEntity<>(orders,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/order/{id}")
     public ResponseEntity<?> getOrder(@PathVariable int id) {
         System.err.println("\n\n\n get order id " + id + "\n\n\n");
