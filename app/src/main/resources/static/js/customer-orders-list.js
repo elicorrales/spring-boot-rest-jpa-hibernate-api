@@ -1,10 +1,10 @@
 'use strict';
-const customerListAreaElem = document.getElementById('customerListArea');
+const customerOrdersListAreaElem = document.getElementById('customerOrdersListArea');
 
-var customerList = {};
+var customerOrdersList = {};
 
 
-const displayCustomer = (idx, customer) => {
+const displayCustomerOrder = (idx, customer) => {
     let html = ''
         + '<tr>'
         + '    <td id="custId-' + customer.id + '">' + customer.id + '</td>'
@@ -22,7 +22,7 @@ const displayCustomer = (idx, customer) => {
     return html;
 }
 
-const displayCustomerList = (customers) => {
+const displayCustomerOrdersList = (customers) => {
     let html = '';
     customers.forEach( (customer,idx) => {
        html += displayCustomer(idx,customer); 
@@ -30,8 +30,8 @@ const displayCustomerList = (customers) => {
     return html;
 }
 
-const getCustomerList = () => {
-    axios.get('/customers')
+const getCustomerOrdersList = () => {
+    axios.get('/customers/customer/'+idOfCustomerSelectedFromList+'/orders')
     .then(
         result => {
             //app.alerts.displayMessage('success','Got Customers..');
@@ -49,5 +49,5 @@ const getCustomerList = () => {
     )
 }
 
-customerList.getCustomerList = getCustomerList;
-app.customerList = customerList;
+customerOrdersList.getCustomerOrdersList = getCustomerOrdersList;
+app.customerOrdersList = customerOrdersList;

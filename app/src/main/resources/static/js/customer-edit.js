@@ -5,6 +5,7 @@ var customerEdit = {};
 
 const onSubmitUpdateCustomerBtnClickDoSubmitUpdateCustomer = (event) => {
     event.preventDefault();
+    app.alerts.hideMessage();
     let id    = document.getElementById('editIdInput').value;
     let fname = document.getElementById('editFnameInput').value;
     let lname = document.getElementById('editLnameInput').value;

@@ -34,6 +34,9 @@
         </div>
     </div>
 
+    <!-- ====================== Begin Customer Section =============================================  -->
+    <!-- ====================== Begin Customer Section =============================================  -->
+    <!-- ====================== Begin Customer Section =============================================  -->
     <div id="customerOverallSection">
         <div class="container-fluid">
             <div style="display:none;" id="newCustomerSection" class="panel panel-info">
@@ -57,7 +60,7 @@
                         </div>
                         <button id="submitNewCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitNewCustomerBtnClickDoSubmitNewCustomer(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelBtnClickDoCancel(event,'Add')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Add')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -65,8 +68,7 @@
             <div id="customerListSection" class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title pull-left">Customer List</h2>
-                    <button id="addCustomerBtn" class="btn btn-primary pull-right"
-                        onclick="onAddCustomerBtnClickDoAddCustomer()">New</button>
+                    <button id="addCustomerBtn" class="btn btn-primary pull-right" onclick="onAddCustomerBtnClickDoShowAddCustomer()">New</button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
@@ -109,7 +111,7 @@
                         </div>
                         <button id="submitUpdateCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitUpdateCustomerBtnClickDoSubmitUpdateCustomer(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelBtnClickDoCancel(event,'Update')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Update')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -136,46 +138,56 @@
                         </div>
                         <button id="submitDeleteCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitDeleteCustomerBtnClickDoSubmitDeleteCustomer(event)" >Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelBtnClickDoCancel(event,'Delete')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Delete')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="customerOverallOrderSection" style="display:none">
+    <!-- ====================== Begin Customer Orders Section =============================================  -->
+    <!-- ====================== Begin Customer Orders Section =============================================  -->
+    <!-- ====================== Begin Customer Orders Section =============================================  -->
+    <div id="customerOverallOrdersSection" style="display:none">
         <div class="container-fluid">
-            <div style="display:none;" id="newCustomerOrderSection" class="panel panel-info">
+            <div style="display:none;" id="newCustomerOrdersSection" class="panel panel-info">
                 <div class="panel-heading">
-                    <div class="panel-title pull-left">Add New Order</div>
+                    <div class="panel-title pull-left">Add New Order For Customer <div id="customerOrdersAddHeading"></div></div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
                     <form>
                         <div class="form-group">
-                            <label for="fnameInput">First Name:</label>
-                            <input id="fnameInput" name="fnameInput" type="text" placeholder="First Name Here.." autofocus />
+                            <label for="orderNumberInput">Order Number:</label>
+                            <input id="orderNumberInput" name="orderNumberInput" type="text" placeholder="Order Number Here.." autofocus />
                         </div>
                         <div class="form-group">
-                            <label for="lnameInput">Last Name:</label>
-                            <input id="lnameInput" name="lnameInput" type="text" placeholder="Last Name Here.." />
+                            <label for="descriptionInput">Last Name:</label>
+                            <input id="descriptionInput" name="descriptionInput" type="text" placeholder="Description Here.." />
                         </div>
                         <div class="form-group">
-                            <label for="emailInput">Email:</label>
-                            <input id="emailInput" name="emailInput" type="text" placeholder="Email Here.." />
+                            <label for="dateOrderedInput">Email:</label>
+                            <input id="dateOrderedInput" name="dateOrderedInput" type="text" placeholder="Date Ordered Here.." />
+                        </div>
+                        <div class="form-group">
+                            <label for="statusInput">Email:</label>
+                            <input id="statusInput" name="statusInput" type="text" placeholder="Status Here.." />
                         </div>
                         <button id="submitNewCustomerOrderBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitNewCustomerOrderBtnClickDoSubmitNewCustomerOrder(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelBtnClickDoCancel(event,'Add')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Add')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
 
-            <div id="customerOrderListSection" class="panel panel-info">
+            <div id="customerOrdersListSection" class="panel panel-info">
                 <div class="panel-heading">
-                    <h2 class="panel-title pull-left">Curent Orders for Customer<div id="customerOrderListHeading"></div></h2>
-                    <button id="addCustomerOrderBtn" class="btn btn-primary pull-right"
-                        onclick="onAddCustomerOrderBtnClickDoAddCustomerOrder()">New</button>
+                    <h2 class="panel-title pull-left">Curent Orders for Customer<div id="customerOrdersListHeading"></div></h2>
+                    <button id="addCustomerOrderBtn" class="btn btn-primary pull-right" onclick="onAddCustomerOrderBtnClickDoShowAddCustomerOrder()">New</button>
+                <!--
+                    <button type="button" class="btn btn-primary pull-right" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Back')" >Back</button>
+                -->
+                    <button type="button" class="btn btn-primary pull-right" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Back')" autofocus>Back</button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
@@ -188,7 +200,7 @@
                             <th class="col-sm-1"></span></th>
                             <th class="col-sm-1"></span></th>
                         </thead>
-                        <tbody id="customerOrderListArea">
+                        <tbody id="customerOrdersListArea">
                             <!-- customer list html added dynamically in JS -->
                         </tbody>
                     </table>
@@ -218,7 +230,7 @@
                         </div>
                         <button id="submitUpdateCustomerOrderBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateOrderCustomer(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelBtnClickDoCancel(event,'Update')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Update')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -245,7 +257,7 @@
                         </div>
                         <button id="submitDeleteCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitDeleteCustomerOrderBtnClickDoSubmitDeleteCustomerOrder(event)" >Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelBtnClickDoCancel(event,'Delete')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Delete')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -256,6 +268,7 @@
     </footer>
 </body>
 <script src="js/vendor/axios.min.js"></script>
+<script src="js/globals.js"></script>
 <script src="js/index.js"></script>
 <script src="js/alerts.js"></script>
 <script src="js/orders.js"></script>
@@ -263,4 +276,6 @@
 <script src="js/customer-list.js"></script>
 <script src="js/customer-edit.js"></script>
 <script src="js/customer-delete.js"></script>
+<script src="js/new-customer-order.js"></script>
+<script src="js/customer-orders-list.js"></script>
 </html>

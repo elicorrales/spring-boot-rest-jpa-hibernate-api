@@ -13,6 +13,7 @@ import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Order;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.model.MessageResponse;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.OrderService;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.utils.ExceptionStackRootCause;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class CustomerRestController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private OrderService orderService;
 
 
     @GetMapping({ "/", "" })
@@ -88,6 +92,19 @@ public class CustomerRestController {
             customer.addOrder(order);
             Customer updated = customerService.updateCustomer(customer);
             return new ResponseEntity<>(new MessageResponse("Updated customer " + customer + ", id = " + updated.getId()),HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/customer/{id}/orders")
+    public ResponseEntity<?> getCustomerOrders(@PathVariable int id) {
+        System.err.println("\n\n\n get all orders for customer id " + id + "\n\n\n");
+        try {
+            List<Order> orders = orderService.findAllOrdersForCustomer(id);
+            return new ResponseEntity<>(orders,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);

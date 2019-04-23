@@ -5,6 +5,7 @@ var customerDelete = {};
 
 const onSubmitDeleteCustomerBtnClickDoSubmitDeleteCustomer = (event) => {
     event.preventDefault();
+    app.alerts.hideMessage();
     let id    = document.getElementById('deleteIdInput').value;
     let fname = document.getElementById('deleteFnameInput').value;
     let lname = document.getElementById('deleteLnameInput').value;
