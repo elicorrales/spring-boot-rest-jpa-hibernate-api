@@ -28,7 +28,6 @@ public class Order {
     @NotEmpty(message="Status Required")
     private String status;
     @Column(name="customer_id")
-    @NotEmpty(message="Customer Id Required")
     private int customerId;
 
     public Order() {}

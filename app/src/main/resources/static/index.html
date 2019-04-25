@@ -172,7 +172,15 @@
                             </div>
                             <div class="col-xs-3">
                                 <label for="statusInput">Status:</label>
-                                <input id="statusInput" name="statusInput" class="form-control" type="text" placeholder="Status Here.." />
+                                <select id="statusInput" name="statusInput" class="form-control" >
+                                    <option value="New" selected>New</option>
+                                    <option value="Hold" >Hold</option>
+                                    <option value="Confirmed" >Confirmed</option>
+                                    <option value="Packed" >Packed</option>
+                                    <option value="Shipped" >Shipped</option>
+                                    <option value="Delivered" >Delivered</option>
+                                    <option value="Canceled" >Canceled</option>
+                                </select>
                             </div>
                         </div>
                         <button id="submitNewCustomerOrderBtn" type="submit" class="btn btn-primary" 
@@ -196,9 +204,10 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <th class="col-sm-1">id</th>
-                            <th class="col-sm-2">First</th>
-                            <th class="col-sm-2">Last</th>
-                            <th class="col-sm-2">Email</th>
+                            <th class="col-sm-3">Order</th>
+                            <th class="col-sm-3">Description</th>
+                            <th class="col-sm-2">Date</th>
+                            <th class="col-sm-1">Status</th>
                             <th class="col-sm-1"></span></th>
                             <th class="col-sm-1"></span></th>
                         </thead>
@@ -217,7 +226,7 @@
                 </div>
                 <div class="panel-body">
                     <form>
-                        <input id="editIdInput" type="hidden"/>
+                        <input id="editOrderIdInput" type="hidden"/>
                         <div class="form-group row">
                             <div class="col-xs-9">
                                 <label for="editOrderNumberInput">Order Number:</label>
@@ -233,11 +242,19 @@
                             </div>
                             <div class="col-xs-3">
                                 <label for="editStatusInput">Status:</label>
-                                <input id="editStatusInput" name="editStatusInput" class="form-control" type="text" placeholder="Status Here.." />
+                                <select id="editStatusInput" name="editStatusInput" class="form-control" >
+                                    <option value="New" >New</option>
+                                    <option value="Hold" >Hold</option>
+                                    <option value="Confirmed" >Confirmed</option>
+                                    <option value="Packed" >Packed</option>
+                                    <option value="Shipped" >Shipped</option>
+                                    <option value="Delivered" >Delivered</option>
+                                    <option value="Canceled" >Canceled</option>
+                                </select>
                             </div>
                         </div>
                         <button id="submitUpdateCustomerOrderBtn" type="submit" class="btn btn-primary" 
-                                onclick="onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateOrderCustomer(event)">Submit</button>
+                                onclick="onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateCustomerOrder(event)">Submit</button>
                         <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Update')" autofocus>Cancel</button>
                     </form>
                 </div>
@@ -250,23 +267,23 @@
                 </div>
                 <div class="panel-body">
                     <form>
-                        <input id="deleteIdInput" type="hidden"/>
+                        <input id="deleteOrderIdInput" type="hidden"/>
                         <div class="form-group row">
                             <div class="col-xs-9">
                                 <label for="deleteOrderNumberInput">Order Number:</label>
-                                <input id="deleteOrderNumberInput" name="deleteOrderNumberInput" class="form-control" type="text" placeholder="Order Number Here (leave blank for autogen).." autofocus />
+                                <input id="deleteOrderNumberInput" name="deleteOrderNumberInput" class="form-control" type="text" placeholder="Order Number Here (leave blank for autogen).." autofocus disabled/>
                             </div>
                             <div class="col-xs-10">
                                 <label for="deleteDescriptionInput">Description:</label>
-                                <input id="deleteDescriptionInput" name="deleteDescriptionInput" class="form-control" type="text" placeholder="Description Here.." />
+                                <input id="deleteDescriptionInput" name="deleteDescriptionInput" class="form-control" type="text" placeholder="Description Here.." disabled/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="deleteDateOrderedInput">Date Ordered:</label>
-                                <input id="deleteDateOrderedInput" name="deleteDateOrderedInput" class="form-control" type="text" placeholder="Date Ordered Here.." />
+                                <input id="deleteDateOrderedInput" name="deleteDateOrderedInput" class="form-control" type="text" placeholder="Date Ordered Here.." disabled/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="deleteStatusInput">Status:</label>
-                                <input id="deleteStatusInput" name="deleteStatusInput" class="form-control" type="text" placeholder="Status Here.." />
+                                <input id="deleteStatusInput" name="deleteStatusInput" class="form-control" type="text" placeholder="Status Here.." disabled/>
                             </div>
                         </div>
                         <button id="submitDeleteCustomerBtn" type="submit" class="btn btn-primary" 

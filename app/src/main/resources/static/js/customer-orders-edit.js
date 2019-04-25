@@ -6,15 +6,17 @@ var customerOrdersEdit = {};
 const onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateCustomerOrder = (event) => {
     event.preventDefault();
     app.alerts.hideMessage();
-    let id    = document.getElementById('editIdInput').value;
-    let fname = document.getElementById('editFnameInput').value;
-    let lname = document.getElementById('editLnameInput').value;
-    let email = document.getElementById('editEmailInput').value;
-    axios.put('/customer', { id, fname, lname, email })
+    let id    = document.getElementById('editOrderIdInput').value;
+    let number = document.getElementById('editOrderNumberInput').value;
+    let description = document.getElementById('editDescriptionInput').value;
+    let dateOrdered = document.getElementById('editDateOrderedInput').value;
+    let status = document.getElementById('editStatusInput').value;
+    axios.put('/customer/'+idOfCustomerSelectedFromList+'/order',
+             { customerId:idOfCustomerSelectedFromList, id, number, description, dateOrdered, status })
     .then(
         result => {
-            app.alerts.displayMessage('success','Customer ' + fname + ' ' + lname + ' updated.');
-            app.showCustomerListSection();
+            app.alerts.displayMessage('success','Order ' + number + '<br/>' + description + ' updated.');
+            app.showCustomerOrdersListSection();
         }
     )
     .catch(
@@ -26,10 +28,11 @@ const onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateCustomerOrder = (event) =
 }
 
 const editOrder = (order) => {
-    document.getElementById('editIdInput').value = order.id;
-    document.getElementById('editFnameInput').value = order.fname;
-    document.getElementById('editLnameInput').value = order.lname;
-    document.getElementById('editEmailInput').value = order.email;
+    document.getElementById('editOrderIdInput').value = order.id;
+    document.getElementById('editOrderNumberInput').value = order.number;
+    document.getElementById('editDescriptionInput').value = order.description;
+    document.getElementById('editDateOrderedInput').value = order.dateOrdered;
+    document.getElementById('editStatusInput').value = order.status;
 }
 
 

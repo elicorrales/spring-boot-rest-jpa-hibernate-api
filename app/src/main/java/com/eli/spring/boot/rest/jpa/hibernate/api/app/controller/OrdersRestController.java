@@ -10,6 +10,7 @@ import com.eli.spring.boot.rest.jpa.hibernate.api.app.utils.ExceptionStackRootCa
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,6 @@ public class OrdersRestController {
         System.err.println("\n\n\nget orders\n\n\n");
         try {
             List<Order> orders = orderService.findAll();
-            //return new ResponseEntity<>(orders,HttpStatus.OK);
             return ResponseEntity.ok().body(orders);
         } catch (Exception e) {
             e.printStackTrace(System.err);
@@ -41,7 +41,6 @@ public class OrdersRestController {
         System.err.println("\n\n\nget customer " + id + " orders\n\n\n");
         try {
             List<Order> orders = orderService.findAllOrdersForCustomer(id);
-            //return new ResponseEntity<>(orders,HttpStatus.OK);
             return ResponseEntity.ok().body(orders);
         } catch (Exception e) {
             e.printStackTrace(System.err);
@@ -50,12 +49,24 @@ public class OrdersRestController {
         }
     }
 
-    @GetMapping("/order/{id}")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteOrder(@PathVariable int id) {
+        System.err.println("\n\n\n delete order id " + id + "\n\n\n");
+        try {
+            orderService.deleteOrder(id);
+            String message = "Delete Order id : " + id;
+            return ResponseEntity.ok().body(message);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
+        }
+    }
+    @GetMapping("/{id}")
     public ResponseEntity<?> getOrder(@PathVariable int id) {
         System.err.println("\n\n\n get order id " + id + "\n\n\n");
         try {
             Order order = orderService.getOrder(id);
-            //return new ResponseEntity<>(order,HttpStatus.OK);
             return ResponseEntity.ok().body(order);
         } catch (Exception e) {
             e.printStackTrace(System.err);

@@ -29,4 +29,9 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrder(int id) {
         return repository.getOne(id);
     }
+
+    @Override
+    public void deleteOrder(int id) {
+        repository.deleteById(id);
+    }
 }

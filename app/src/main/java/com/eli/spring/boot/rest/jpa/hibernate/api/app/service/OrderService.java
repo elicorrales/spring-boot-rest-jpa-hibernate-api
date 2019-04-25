@@ -9,4 +9,5 @@ public interface OrderService {
     List<Order> findAll();
     List<Order> findAllOrdersForCustomer(int id);
     Order getOrder(int id);
+    void deleteOrder(int id);
 }

@@ -75,6 +75,7 @@ public class CustomerRestController {
             String message = "Added customer " + customer + ", id = " + newCustomerId + "\n";
             return ResponseEntity.ok().body(message);
         } catch (ConstraintViolationException e) {
+            e.printStackTrace(System.err);
             Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
             List<String> messages = new ArrayList<>();
             violations.stream().forEach( action -> { messages.add(action.getMessage()); });
@@ -99,6 +100,38 @@ public class CustomerRestController {
             Customer updated = customerService.updateCustomer(customer);
             String message = "Updated customer " + customer + ", id = " + updated.getId();
             return ResponseEntity.ok().body(message);
+        } catch (ConstraintViolationException e) {
+            e.printStackTrace(System.err);
+            Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+            List<String> messages = new ArrayList<>();
+            violations.stream().forEach( action -> { messages.add(action.getMessage()); });
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messages);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
+        }
+    }
+
+
+    @PutMapping("/{id}/order")
+    public ResponseEntity<?> editOrder(@PathVariable int id, @RequestBody Order order) {
+        System.err.println("\n\n\n edit order " + order + "  to cutomer id " + id + "\n\n\n");
+        try {
+            Customer customer = customerService.getCustomer(id);
+            if (order.getNumber() == null || order.getNumber().isEmpty()) {
+                throw new IllegalArgumentException("Bad/Missing Order Number");
+            }
+            customer.addOrder(order);
+            Customer updated = customerService.updateCustomer(customer);
+            String message = "Updated order " + order.getNumber() + ", id = " + updated.getId() + ", for Customer " + id;
+            return ResponseEntity.ok().body(message);
+        } catch (ConstraintViolationException e) {
+            e.printStackTrace(System.err);
+            Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+            List<String> messages = new ArrayList<>();
+            violations.stream().forEach( action -> { messages.add(action.getMessage()); });
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messages);
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
