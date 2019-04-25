@@ -26,10 +26,10 @@ const onSubmitDeleteCustomerOrderBtnClickDoSubmitDeleteCustomerOrder = (event) =
 
 const deleteOrder = (order) => {
     document.getElementById('deleteIdInput').value = order.id;
-    document.getElementById('deleteNumberInput').value = order.fname;
-    document.getElementById('deleteDescriptionInput').value = order.lname;
-    document.getElementById('deleteDateOrderedInput').value = order.email;
-    document.getElementById('deleteStatusInput').value = order.email;
+    document.getElementById('deleteOrderNumberInput').value = order.number;
+    document.getElementById('deleteDescriptionInput').value = order.description;
+    document.getElementById('deleteDateOrderedInput').value = order.dateOrdered;
+    document.getElementById('deleteStatusInput').value = order.status;
 }
 
 

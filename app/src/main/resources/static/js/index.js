@@ -125,7 +125,7 @@ const hideCustomerOrdersListSection = (why) => {
     } else if (why === 'forEdit') {
         editCustomerOrdersSectionElem.style.display = 'block';
     } else if (why === 'forDelete') {
-        deleteCustomerSectionElem.style.display = 'block';
+        deleteCustomerOrdersSectionElem.style.display = 'block';
     }
 }
 
@@ -144,7 +144,7 @@ const onEditCustomerOrderClickDoEditCustomerOrder = (event,id) => {
     let description = document.getElementById('custOrdDesc-'+id).innerText;
     let dateOrdered = document.getElementById('custOrdDate-'+id).innerText;
     let status = document.getElementById('custOrdStat-'+id).innerText;
-    app.hideCustomerListSection('forEdit');
+    app.hideCustomerOrdersListSection('forEdit');
     let order = {};
     order.number = number;
     order.description = description;
@@ -160,7 +160,7 @@ const onDeleteCustomerOrderClickDoDeleteCustomerOrder = (event,id) => {
     let description = document.getElementById('custOrdDesc-'+id).innerText;
     let dateOrdered = document.getElementById('custOrdDate-'+id).innerText;
     let status = document.getElementById('custOrdStat-'+id).innerText;
-    app.hideCustomerListSection('forDelete');
+    app.hideCustomerOrdersListSection('forDelete');
     let order = {};
     order.number = number;
     order.description = description;

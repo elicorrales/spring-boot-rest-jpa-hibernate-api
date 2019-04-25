@@ -218,17 +218,23 @@
                 <div class="panel-body">
                     <form>
                         <input id="editIdInput" type="hidden"/>
-                        <div class="form-group">
-                            <label for="editFnameInput">First Name:</label>
-                            <input id="editFnameInput" name="editFnameInput" type="text" placeholder="First Name Here.." autofocus />
-                        </div>
-                        <div class="form-group">
-                            <label for="editLnameInput">Last Name:</label>
-                            <input id="editLnameInput" name="editLnameInput" type="text" placeholder="Last Name Here.." />
-                        </div>
-                        <div class="form-group">
-                            <label for="editEmailInput">Email:</label>
-                            <input id="editEmailInput" name="editEmailInput" type="text" placeholder="Email Here.." />
+                        <div class="form-group row">
+                            <div class="col-xs-9">
+                                <label for="editOrderNumberInput">Order Number:</label>
+                                <input id="editOrderNumberInput" name="editOrderNumberInput" class="form-control" type="text" placeholder="Order Number Here (leave blank for autogen).." autofocus />
+                            </div>
+                            <div class="col-xs-10">
+                                <label for="editDescriptionInput">Description:</label>
+                                <input id="editDescriptionInput" name="editDescriptionInput" class="form-control" type="text" placeholder="Description Here.." />
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="editDdateOrderedInput">Date Ordered:</label>
+                                <input id="editDateOrderedInput" name="editDateOrderedInput" class="form-control" type="text" placeholder="Date Ordered Here.." />
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="editStatusInput">Status:</label>
+                                <input id="editStatusInput" name="editStatusInput" class="form-control" type="text" placeholder="Status Here.." />
+                            </div>
                         </div>
                         <button id="submitUpdateCustomerOrderBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateOrderCustomer(event)">Submit</button>
@@ -245,17 +251,23 @@
                 <div class="panel-body">
                     <form>
                         <input id="deleteIdInput" type="hidden"/>
-                        <div class="form-group">
-                            <label for="deleteFnameInput">First Name:</label>
-                            <input id="deleteFnameInput" name="deleteFnameInput" type="text" placeholder="First Name Here.." disabled/>
-                        </div>
-                        <div class="form-group">
-                            <label for="deleteLnameInput">Last Name:</label>
-                            <input id="deleteLnameInput" name="deleteLnameInput" type="text" placeholder="Last Name Here.." disabled/>
-                        </div>
-                        <div class="form-group">
-                            <label for="deleteEmailInput">Email:</label>
-                            <input id="deleteEmailInput" name="deleteEmailInput" type="text" placeholder="Email Here.." disabled/>
+                        <div class="form-group row">
+                            <div class="col-xs-9">
+                                <label for="deleteOrderNumberInput">Order Number:</label>
+                                <input id="deleteOrderNumberInput" name="deleteOrderNumberInput" class="form-control" type="text" placeholder="Order Number Here (leave blank for autogen).." autofocus />
+                            </div>
+                            <div class="col-xs-10">
+                                <label for="deleteDescriptionInput">Description:</label>
+                                <input id="deleteDescriptionInput" name="deleteDescriptionInput" class="form-control" type="text" placeholder="Description Here.." />
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="deleteDateOrderedInput">Date Ordered:</label>
+                                <input id="deleteDateOrderedInput" name="deleteDateOrderedInput" class="form-control" type="text" placeholder="Date Ordered Here.." />
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="deleteStatusInput">Status:</label>
+                                <input id="deleteStatusInput" name="deleteStatusInput" class="form-control" type="text" placeholder="Status Here.." />
+                            </div>
                         </div>
                         <button id="submitDeleteCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitDeleteCustomerOrderBtnClickDoSubmitDeleteCustomerOrder(event)" >Submit</button>
