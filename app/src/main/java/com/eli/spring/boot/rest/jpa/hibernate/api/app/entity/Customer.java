@@ -24,13 +24,13 @@ public class Customer {
     @Column(name="id")
     private int id;
     @Column(name="fname")
-    @NotEmpty(message="First Name May Not Be Empty")
+    @NotEmpty(message="First Name Required")
     private String fname;
     @Column(name="lname")
-    @NotEmpty(message="Last Name May Not Be Empty")
+    @NotEmpty(message="Last Name Required")
     private String lname;
     @Column(name="email")
-    @NotEmpty(message="Email May Not Be Empty")
+    @NotEmpty(message="Email Required")
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

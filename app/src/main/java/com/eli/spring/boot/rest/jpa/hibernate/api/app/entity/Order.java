@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="orders")
@@ -16,14 +17,18 @@ public class Order {
     @Column(name="id")
     private int id;
     @Column(name="number")
+    @NotEmpty(message="Order Number Required")
     private String number;
     @Column(name="description")
+    @NotEmpty(message="Description Required")
     private String description;
     @Column(name="date_ordered")
     private String dateOrdered;
     @Column(name="status")
+    @NotEmpty(message="Status Required")
     private String status;
     @Column(name="customer_id")
+    @NotEmpty(message="Customer Id Required")
     private int customerId;
 
     public Order() {}

@@ -12,6 +12,8 @@ const customerOrdersListHeadingElem = document.getElementById('customerOrdersLis
 const customerOrdersAddHeadingElem = document.getElementById('customerOrdersAddHeading');
 const customerOrdersListSectionElem = document.getElementById('customerOrdersListSection');
 const newCustomerOrdersSectionElem = document.getElementById('newCustomerOrdersSection');
+const editCustomerOrdersSectionElem = document.getElementById('editCustomerOrdersSection');
+const deleteCustomerOrdersSectionElem = document.getElementById('deleteCustomerOrdersSection');
 
 
 /********************************************************************************************
@@ -46,10 +48,10 @@ const onAddCustomerBtnClickDoShowAddCustomer = () => {
 const onEditCustomerClickDoEditCustomer = (event,id) => {
     event.preventDefault();
     app.alerts.hideMessage();
-    let custId = document.getElementById('custId-'+id).value;
-    let custFname = document.getElementById('custFname-'+id).value;
-    let custLname = document.getElementById('custLname-'+id).value;
-    let custEmail = document.getElementById('custEmail-'+id).value;
+    let custId = document.getElementById('custId-'+id).innerText;
+    let custFname = document.getElementById('custFname-'+id).innerText;
+    let custLname = document.getElementById('custLname-'+id).innerText;
+    let custEmail = document.getElementById('custEmail-'+id).innerText;
     //app.alerts.displayMessage('info', custId + ','+custFname+','+custLname);
     hideCustomerListSection('forEdit');
     let customer = {};
@@ -63,10 +65,10 @@ const onEditCustomerClickDoEditCustomer = (event,id) => {
 const onDeleteCustomerClickDoDeleteCustomer = (event,id) => {
     event.preventDefault();
     app.alerts.hideMessage();
-    let custId = document.getElementById('custId-'+id).value;
-    let custFname = document.getElementById('custFname-'+id).value;
-    let custLname = document.getElementById('custLname-'+id).value;
-    let custEmail = document.getElementById('custEmail-'+id).value;
+    let custId = document.getElementById('custId-'+id).innerText;
+    let custFname = document.getElementById('custFname-'+id).innerText;
+    let custLname = document.getElementById('custLname-'+id).innerText;
+    let custEmail = document.getElementById('custEmail-'+id).innerText;
     //app.alerts.displayMessage('info', custId + ','+custFname+','+custLname);
     app.hideCustomerListSection('forDelete');
     let customer = {};
@@ -112,7 +114,7 @@ const showCustomerOrdersListSection = () => {
     newCustomerOrdersSectionElem.style.display = 'none';
     editCustomerOrdersSectionElem.style.display = 'none';
     deleteCustomerOrdersSectionElem.style.display = 'none';
-    customerOverallOrdersSectionElem.style.display = 'none';
+    customerOverallOrdersSectionElem.style.display = 'block';
     app.customerOrdersList.getCustomerOrdersList();
 }
 
@@ -133,6 +135,38 @@ const onAddCustomerOrderBtnClickDoShowAddCustomerOrder = () => {
     let custFname = document.getElementById('custFname-'+ idOfCustomerSelectedFromList).innerText;
     let custLname = document.getElementById('custLname-'+ idOfCustomerSelectedFromList).innerText;
     customerOrdersAddHeadingElem.innerHTML = custFname + ' ' + custLname;
+}
+
+const onEditCustomerOrderClickDoEditCustomerOrder = (event,id) => {
+    event.preventDefault();
+    app.alerts.hideMessage();
+    let number = document.getElementById('custOrdNum-'+id).innerText;
+    let description = document.getElementById('custOrdDesc-'+id).innerText;
+    let dateOrdered = document.getElementById('custOrdDate-'+id).innerText;
+    let status = document.getElementById('custOrdStat-'+id).innerText;
+    app.hideCustomerListSection('forEdit');
+    let order = {};
+    order.number = number;
+    order.description = description;
+    order.dateOrdered = dateOrdered;
+    order.status = status;
+    app.customerOrdersEdit.editOrder(order);
+}
+
+const onDeleteCustomerOrderClickDoDeleteCustomerOrder = (event,id) => {
+    event.preventDefault();
+    app.alerts.hideMessage();
+    let number = document.getElementById('custOrdNum-'+id).innerText;
+    let description = document.getElementById('custOrdDesc-'+id).innerText;
+    let dateOrdered = document.getElementById('custOrdDate-'+id).innerText;
+    let status = document.getElementById('custOrdStat-'+id).innerText;
+    app.hideCustomerListSection('forDelete');
+    let order = {};
+    order.number = number;
+    order.description = description;
+    order.dateOrdered = dateOrdered;
+    order.status = status;
+    app.customerOrdersDelete.deleteOrder(order);
 }
 
 const onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation = (event,what) => {

@@ -9,7 +9,7 @@ const onSubmitDeleteCustomerBtnClickDoSubmitDeleteCustomer = (event) => {
     let id    = document.getElementById('deleteIdInput').value;
     let fname = document.getElementById('deleteFnameInput').value;
     let lname = document.getElementById('deleteLnameInput').value;
-    axios.delete('/customers/customer/' + id)
+    axios.delete('/customer/' + id)
     .then(
         result => {
             app.alerts.displayMessage('success','Customer ' + fname + ' ' + lname + ' deleted.');
@@ -18,11 +18,7 @@ const onSubmitDeleteCustomerBtnClickDoSubmitDeleteCustomer = (event) => {
     )
     .catch(
         error => {
-            let msg = error.response;
-            msg = error.response.data;
-            msg = error.response.data.message;
-            let message = error.response && error.response.data && error.response.data.message ? error.response.data.message:error;
-            app.alerts.displayMessage('danger',message);
+            app.utils.displayError(error);
         }
     );
 

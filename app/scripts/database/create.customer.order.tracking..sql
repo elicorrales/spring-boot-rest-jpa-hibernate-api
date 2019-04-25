@@ -15,7 +15,7 @@ create table `customer` (
 
 create table `orders` (
 	`id`			int(11) not null auto_increment,
-	`number`		varchar(20) not null,
+	`number`		varchar(100) not null,
     `description`	varchar(100) not null,
     `date_ordered`	varchar(50) not null,
     `status`		varchar(50) not null,

@@ -1,9 +1,9 @@
 'use strict';
 
-var customerEdit = {};
+var customerOrdersEdit = {};
 
 
-const onSubmitUpdateCustomerBtnClickDoSubmitUpdateCustomer = (event) => {
+const onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateCustomerOrder = (event) => {
     event.preventDefault();
     app.alerts.hideMessage();
     let id    = document.getElementById('editIdInput').value;
@@ -25,13 +25,13 @@ const onSubmitUpdateCustomerBtnClickDoSubmitUpdateCustomer = (event) => {
 
 }
 
-const editCustomer = (customer) => {
-    document.getElementById('editIdInput').value = customer.id;
-    document.getElementById('editFnameInput').value = customer.fname;
-    document.getElementById('editLnameInput').value = customer.lname;
-    document.getElementById('editEmailInput').value = customer.email;
+const editOrder = (order) => {
+    document.getElementById('editIdInput').value = order.id;
+    document.getElementById('editFnameInput').value = order.fname;
+    document.getElementById('editLnameInput').value = order.lname;
+    document.getElementById('editEmailInput').value = order.email;
 }
 
 
-customerEdit.editCustomer = editCustomer;
-app.customerEdit = customerEdit;
+customerOrdersEdit.editOrder = editOrder;
+app.customerOrdersEdit = customerOrdersEdit;

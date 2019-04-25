@@ -11,7 +11,7 @@ const onSubmitNewCustomerOrderBtnClickDoSubmitNewCustomerOrder = (event) => {
     let description = descriptionInputElem.value;
     let dateOrdered = dateOrderedInputElem.value;
     let status = statusInputElem.value;
-    axios.post('/customers/customer/'+idOfCustomerSelectedFromList+'/order', { number, description, dateOrdered, status })
+    axios.post('/customer/'+idOfCustomerSelectedFromList+'/order', { number, description, dateOrdered, status })
     .then(
         result => {
             app.alerts.displayMessage('success','New Customer Order' + number + ' ' + dateOrdered + ' added.');
@@ -20,24 +20,7 @@ const onSubmitNewCustomerOrderBtnClickDoSubmitNewCustomerOrder = (event) => {
     )
     .catch(
         error => {
-            let message = '';
-            if (error.response) {
-                if (error.response.data) {
-                    if (error.response.data.message) {
-                        message = error.response.data.message;
-                    } else if (error.response.data.length > 0) {
-                        error.response.data.forEach(x => { message += x + '<br/>'});
-                    } else {
-                        message = error.response.data;
-                    }
-
-                } else {
-                    message = error.response;
-                }
-            } else {
-                message = error;
-            }
-            app.alerts.displayMessage('danger',message);
+            app.utils.displayError(error);
         }
     );
 

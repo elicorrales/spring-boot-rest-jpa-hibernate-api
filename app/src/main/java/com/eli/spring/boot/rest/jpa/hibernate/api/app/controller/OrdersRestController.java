@@ -16,17 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/order")
 public class OrdersRestController {
 
     @Autowired
     private OrderService orderService;
 
-    @GetMapping({ "/", "" })
+    @GetMapping
     public ResponseEntity<?> getOrders() {
         System.err.println("\n\n\nget orders\n\n\n");
-        List<Order> orders = orderService.findAll();
-        return new ResponseEntity<>(orders,HttpStatus.OK);
+        try {
+            List<Order> orders = orderService.findAll();
+            //return new ResponseEntity<>(orders,HttpStatus.OK);
+            return ResponseEntity.ok().body(orders);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            Throwable t = ExceptionStackRootCause.getRootCause(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
+        }
     }
 
     @GetMapping("/customer/{id}")
@@ -34,11 +41,12 @@ public class OrdersRestController {
         System.err.println("\n\n\nget customer " + id + " orders\n\n\n");
         try {
             List<Order> orders = orderService.findAllOrdersForCustomer(id);
-            return new ResponseEntity<>(orders,HttpStatus.OK);
+            //return new ResponseEntity<>(orders,HttpStatus.OK);
+            return ResponseEntity.ok().body(orders);
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
-            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
     }
 
@@ -47,11 +55,12 @@ public class OrdersRestController {
         System.err.println("\n\n\n get order id " + id + "\n\n\n");
         try {
             Order order = orderService.getOrder(id);
-            return new ResponseEntity<>(order,HttpStatus.OK);
+            //return new ResponseEntity<>(order,HttpStatus.OK);
+            return ResponseEntity.ok().body(order);
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
-            return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
     }
 }

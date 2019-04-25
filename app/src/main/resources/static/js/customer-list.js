@@ -23,6 +23,10 @@ const displayCustomer = (idx, customer) => {
 }
 
 const displayCustomerList = (customers) => {
+    if (customers===undefined || customers.length<1) {
+        app.alerts.displayMessage('warning','No Customers');
+        return '';
+    }
     let html = '';
     customers.forEach( (customer,idx) => {
        html += displayCustomer(idx,customer); 
@@ -31,7 +35,7 @@ const displayCustomerList = (customers) => {
 }
 
 const getCustomerList = () => {
-    axios.get('/customers')
+    axios.get('/customer')
     .then(
         result => {
             //app.alerts.displayMessage('success','Got Customers..');
@@ -40,11 +44,7 @@ const getCustomerList = () => {
     )
     .catch(
         error => {
-            let msg = error.response;
-            msg = error.response.data;
-            msg = error.response.data.message;
-            let message = error.response && error.response.data && error.response.data.message ? error.response.data.message:error;
-            app.alerts.displayMessage('danger',message);
+            app.utils.displayError(error);
         }
     )
 }

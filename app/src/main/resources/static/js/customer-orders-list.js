@@ -4,47 +4,44 @@ const customerOrdersListAreaElem = document.getElementById('customerOrdersListAr
 var customerOrdersList = {};
 
 
-const displayCustomerOrder = (idx, customer) => {
+const displayCustomerOrder = (idx, order) => {
     let html = ''
         + '<tr>'
-        + '    <td id="custId-' + customer.id + '">' + customer.id + '</td>'
-        + '    <td id="custFname-' + customer.id + '">' + customer.fname + '</td>'
-        + '    <td id="custLname-' + customer.id + '">' + customer.lname + '</td>'
-        + '    <td id="custEmail-' + customer.id + '">' + customer.email + '</td>'
-        //+ '    <td><a href="" onclick="onEditCustomerClickDoEditCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-pencil"></i> </span></a></td>'
-        //+ '    <td><a href="" onclick="onDeleteCustomerClickDoDeleteCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-trash"></i> </span></a></td>'
-        //+ '    <td><a href="" onclick="onGoToCustomerOrdersClickDoGoToCustomerOrders(event,'+customer.id+')"> <i class="glyphicon glyphicon-usd"></i> </span></a></td>'
-        + '    <td><h5><a href="" onclick="onEditCustomerClickDoEditCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-pencil"></i> </a> '
-        + '    <a href="" onclick="onDeleteCustomerClickDoDeleteCustomer(event,'+customer.id+')"> <i class="glyphicon glyphicon-trash"></i> </a> '
-        + '    <a href="" onclick="onGoToCustomerOrdersClickDoGoToCustomerOrders(event,'+customer.id+')"> <i class="glyphicon glyphicon-usd"></i> </a></h5></td>'
+        + '    <td id="custId-' + order.id + '">' + order.id + '</td>'
+        + '    <td id="custOrdNum-' + order.id + '">' + order.number + '</td>'
+        + '    <td id="custOrdDesc-' + order.id + '">' + order.description + '</td>'
+        + '    <td id="custOrdDate-' + order.id + '">' + order.dateOrdered + '</td>'
+        + '    <td id="custOrdStat-' + order.id + '">' + order.status + '</td>'
+        + '    <td><h5><a href="" onclick="onEditCustomerOrderClickDoEditCustomerOrder(event,'+order.id+')"> <i class="glyphicon glyphicon-pencil"></i> </a> '
+        + '    <a href="" onclick="onDeleteCustomerOrderClickDoDeleteCustomerOrder(event,'+order.id+')"> <i class="glyphicon glyphicon-trash"></i> </a> '
         + '</tr>';
 
     return html;
 }
 
-const displayCustomerOrdersList = (customers) => {
+const displayCustomerOrdersList = (orders) => {
+    if (orders === undefined || orders.length < 1) {
+        app.alerts.displayMessage('warning','No Orders Found');
+        return '';
+    }
     let html = '';
-    customers.forEach( (customer,idx) => {
-       html += displayCustomer(idx,customer); 
+    orders.forEach( (order,idx) => {
+       html += displayCustomerOrder(idx,order); 
     });
     return html;
 }
 
 const getCustomerOrdersList = () => {
-    axios.get('/customers/customer/'+idOfCustomerSelectedFromList+'/orders')
+    axios.get('/order/customer/'+idOfCustomerSelectedFromList)
     .then(
         result => {
             //app.alerts.displayMessage('success','Got Customers..');
-            customerListAreaElem. innerHTML = displayCustomerList(result.data);
+            customerOrdersListAreaElem. innerHTML = displayCustomerOrdersList(result.data);
         }
     )
     .catch(
         error => {
-            let msg = error.response;
-            msg = error.response.data;
-            msg = error.response.data.message;
-            let message = error.response && error.response.data && error.response.data.message ? error.response.data.message:error;
-            app.alerts.displayMessage('danger',message);
+            app.utils.displayError(error);
         }
     )
 }
