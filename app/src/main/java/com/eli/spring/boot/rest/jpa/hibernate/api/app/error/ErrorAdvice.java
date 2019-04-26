@@ -37,16 +37,17 @@ public class ErrorAdvice {
         if (violations != null && violations.size() > 0) {
             List<String> messages = new ArrayList<>();
             violations.stream().forEach( action -> { messages.add(action.getMessage()); });
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messages);
+            return ResponseEntity.badRequest().body(messages);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.badRequest().build();
     }
 
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    //@ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class})
-    public void handleErrorBadRequest(Exception e) {
+    public ResponseEntity<?> handleErrorBadRequest(Exception e) {
         System.err.println("\n\n\nhandleErrorBadRequest(): " + e.getMessage()+ "\n\n\n");
+        return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

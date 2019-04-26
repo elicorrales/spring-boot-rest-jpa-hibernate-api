@@ -1,5 +1,9 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.model.MessageResponse;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 //@RestController
@@ -14,4 +18,9 @@ public class MainRestController {
         return new ResponseEntity<>(new MessageResponse(auth.getName()),HttpStatus.OK);
     }
 */
+
+    @GetMapping("/error")
+    public ResponseEntity<?> error() {
+        return ResponseEntity.badRequest().body(new MessageResponse("Error"));
+    }
 }

@@ -1,22 +1,16 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Order;
-import com.eli.spring.boot.rest.jpa.hibernate.api.app.model.MessageResponse;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
-import com.eli.spring.boot.rest.jpa.hibernate.api.app.utils.ExceptionStackRootCause;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javassist.NotFoundException;
-
 @RestController
 @RequestMapping("/customer")
 public class CustomerRestController {
@@ -38,7 +30,7 @@ public class CustomerRestController {
 
 
     @GetMapping
-    public ResponseEntity<?> getCustomers() throws NotFoundException {
+    public ResponseEntity<?> getCustomers() {
         System.err.println("\n\n\nget customers\n\n\n");
         //try {
             List<Customer> customers = customerService.findAll();
@@ -50,6 +42,17 @@ public class CustomerRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
         */
+    }
+
+    @GetMapping("/{page}/{size}/{direction}/{sortBy}")
+    public ResponseEntity<?> getPageOfCustomers(
+                                @PathVariable int page, 
+                                @PathVariable int size, 
+                                @PathVariable String direction,
+                                @PathVariable String sortBy) {
+        System.err.println("\n\n\nget customers (page)\n\n\n");
+        Page<Customer> customers = customerService.findAll(size, page, Direction.valueOf(direction), sortBy); 
+        return ResponseEntity.ok().body(customers);
     }
 
     @GetMapping("/{id}")
