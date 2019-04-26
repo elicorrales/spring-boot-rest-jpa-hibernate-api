@@ -17,7 +17,7 @@ create table `orders` (
 	`id`			int(11) not null auto_increment,
 	`number`		varchar(100) not null,
     `description`	varchar(100) not null,
-    `date_ordered`	varchar(50) not null,
+    `date_created`	datetime default current_timestamp,
     `status`		varchar(50) not null,
     `customer_id`	int(11),
     primary key (`id`),

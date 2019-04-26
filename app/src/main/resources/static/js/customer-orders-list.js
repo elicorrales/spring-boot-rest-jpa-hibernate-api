@@ -11,7 +11,7 @@ const displayCustomerOrder = (idx, order) => {
         + '    <td id="custOrdId-' + order.id + '">' + order.id + '</td>'
         + '    <td id="custOrdNum-' + order.id + '">' + order.number + '</td>'
         + '    <td id="custOrdDesc-' + order.id + '">' + order.description + '</td>'
-        + '    <td id="custOrdDate-' + order.id + '">' + order.dateOrdered + '</td>'
+        + '    <td id="custOrdDate-' + order.id + '">' + order.dateCreated + '</td>'
         + '    <td id="custOrdStat-' + order.id + '">' + order.status + '</td>'
         + '    <td><h5><a href="" onclick="onEditCustomerOrderClickDoEditCustomerOrder(event,'+order.id+')"> <i class="glyphicon glyphicon-pencil"></i> </a> '
         + '    <a href="" onclick="onDeleteCustomerOrderClickDoDeleteCustomerOrder(event,'+order.id+')"> <i class="glyphicon glyphicon-trash"></i> </a> '

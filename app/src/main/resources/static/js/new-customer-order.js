@@ -1,7 +1,7 @@
 'use strict';
 const orderNumberInputElem = document.getElementById('orderNumberInput');
 const descriptionInputElem = document.getElementById('descriptionInput');
-const dateOrderedInputElem = document.getElementById('dateOrderedInput');
+const dateCreatedInputElem = document.getElementById('dateCreatedInput');
 const statusInputElem = document.getElementById('statusInput');
 
 const onSubmitNewCustomerOrderBtnClickDoSubmitNewCustomerOrder = (event) => {
@@ -9,12 +9,12 @@ const onSubmitNewCustomerOrderBtnClickDoSubmitNewCustomerOrder = (event) => {
     app.alerts.hideMessage();
     let number = orderNumberInputElem.value;
     let description = descriptionInputElem.value;
-    let dateOrdered = dateOrderedInputElem.value;
+    //let dateCreated = dateCreatedInputElem.value; //let server set date
     let status = statusInputElem.value;
-    axios.post('/customer/'+idOfCustomerSelectedFromList+'/order', { number, description, dateOrdered, status })
+    axios.post('/customer/'+idOfCustomerSelectedFromList+'/order', { number, description, status })
     .then(
         result => {
-            app.alerts.displayMessage('success','New Customer Order' + number + ' ' + dateOrdered + ' added.');
+            app.alerts.displayMessage('success','New Customer Order' + number + ' added.');
             app.showCustomerOrdersListSection();
         }
     )

@@ -60,7 +60,7 @@
                         </div>
                         <button id="submitNewCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitNewCustomerBtnClickDoSubmitNewCustomer(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Add')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Add')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                         </div>
                         <button id="submitUpdateCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitUpdateCustomerBtnClickDoSubmitUpdateCustomer(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Update')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Update')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                         </div>
                         <button id="submitDeleteCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitDeleteCustomerBtnClickDoSubmitDeleteCustomer(event)" >Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Delete')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Delete')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -166,26 +166,18 @@
                                 <label for="descriptionInput">Description:</label>
                                 <input id="descriptionInput" name="descriptionInput" class="form-control" type="text" placeholder="Description Here.." />
                             </div>
-                            <div class="col-xs-3">
-                                <label for="dateOrderedInput">Date Ordered:</label>
-                                <input id="dateOrderedInput" name="dateOrderedInput" class="form-control" type="text" placeholder="Date Ordered Here.." />
+                            <div style="display:none" class="col-xs-3">
+                                <label for="dateCreatedInput">Date Created:</label>
+                                <input id="dateCreatedInput" name="dateCreatedInput" class="form-control" type="text" placeholder="Date Created Here.." />
                             </div>
                             <div class="col-xs-3">
                                 <label for="statusInput">Status:</label>
-                                <select id="statusInput" name="statusInput" class="form-control" >
-                                    <option value="New" selected>New</option>
-                                    <option value="Hold" >Hold</option>
-                                    <option value="Confirmed" >Confirmed</option>
-                                    <option value="Packed" >Packed</option>
-                                    <option value="Shipped" >Shipped</option>
-                                    <option value="Delivered" >Delivered</option>
-                                    <option value="Canceled" >Canceled</option>
-                                </select>
+                                <input id="statusInput" name="deleteStatusInput" class="form-control" type="text" value="New" disabled/>
                             </div>
                         </div>
                         <button id="submitNewCustomerOrderBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitNewCustomerOrderBtnClickDoSubmitNewCustomerOrder(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Add')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Add')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -194,10 +186,7 @@
                 <div class="panel-heading">
                     <h2 class="panel-title pull-left">Curent Orders for Customer<div id="customerOrdersListHeading"></div></h2>
                     <button id="addCustomerOrderBtn" class="btn btn-primary pull-right" onclick="onAddCustomerOrderBtnClickDoShowAddCustomerOrder()">New</button>
-                <!--
-                    <button type="button" class="btn btn-primary pull-right" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Back')" >Back</button>
-                -->
-                    <button type="button" class="btn btn-primary pull-right" onclick="onCancelCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Back')" autofocus>Back</button>
+                    <button type="button" class="btn btn-primary pull-right" onclick="onCancelCustomerOperationBtnClickDoCancelCustomerOperation(event,'Back')" autofocus>Back</button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
@@ -237,8 +226,8 @@
                                 <input id="editDescriptionInput" name="editDescriptionInput" class="form-control" type="text" placeholder="Description Here.." />
                             </div>
                             <div class="col-xs-3">
-                                <label for="editDdateOrderedInput">Date Ordered:</label>
-                                <input id="editDateOrderedInput" name="editDateOrderedInput" class="form-control" type="text" placeholder="Date Ordered Here.." />
+                                <label for="editDdateCreatedInput">Date Created:</label>
+                                <input id="editDateCreatedInput" name="editDateCreatedInput" class="form-control" type="text" placeholder="Date Created Here.." disabled/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="editStatusInput">Status:</label>
@@ -255,7 +244,7 @@
                         </div>
                         <button id="submitUpdateCustomerOrderBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateCustomerOrder(event)">Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Update')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Update')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -278,8 +267,8 @@
                                 <input id="deleteDescriptionInput" name="deleteDescriptionInput" class="form-control" type="text" placeholder="Description Here.." disabled/>
                             </div>
                             <div class="col-xs-3">
-                                <label for="deleteDateOrderedInput">Date Ordered:</label>
-                                <input id="deleteDateOrderedInput" name="deleteDateOrderedInput" class="form-control" type="text" placeholder="Date Ordered Here.." disabled/>
+                                <label for="deleteDateCreatedInput">Date Created:</label>
+                                <input id="deleteDateCreatedInput" name="deleteDateCreatedInput" class="form-control" type="text" placeholder="Date Created Here.." disabled/>
                             </div>
                             <div class="col-xs-3">
                                 <label for="deleteStatusInput">Status:</label>
@@ -288,7 +277,7 @@
                         </div>
                         <button id="submitDeleteCustomerBtn" type="submit" class="btn btn-primary" 
                                 onclick="onSubmitDeleteCustomerOrderBtnClickDoSubmitDeleteCustomerOrder(event)" >Submit</button>
-                        <button type="button" class="btn btn-primary" onclick="onCancelCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Delete')" autofocus>Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="onCancelCustomerOrdersOperationBtnClickDoCancelCustomerOrdersOperation(event,'Delete')" autofocus>Cancel</button>
                     </form>
                 </div>
             </div>

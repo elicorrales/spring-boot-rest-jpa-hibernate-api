@@ -28,7 +28,7 @@ const deleteOrder = (order) => {
     document.getElementById('deleteOrderIdInput').value = order.id;
     document.getElementById('deleteOrderNumberInput').value = order.number;
     document.getElementById('deleteDescriptionInput').value = order.description;
-    document.getElementById('deleteDateOrderedInput').value = order.dateOrdered;
+    document.getElementById('deleteDateCreatedInput').value = order.dateCreated;
     document.getElementById('deleteStatusInput').value = order.status;
 }
 

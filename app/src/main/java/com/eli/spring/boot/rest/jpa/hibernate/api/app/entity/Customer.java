@@ -2,6 +2,7 @@ package com.eli.spring.boot.rest.jpa.hibernate.api.app.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -62,6 +63,23 @@ public class Customer {
         }
         order.setCustomerId(this.id);
         orders.add(order);
+    }
+
+    public void setNewCustomerInfo(Customer newStuff) {
+        this.fname = newStuff.fname;
+        this.lname = newStuff.lname;
+        this.email = newStuff.email;
+    }
+
+    public Order getOrder(int orderId) {
+        List<Order> filtered = orders.stream().filter( o -> o.getId()==orderId).collect(Collectors.toList());
+        if (filtered.size() != 1) throw new RuntimeException("No Order " + orderId + " for Customer " + id);
+        return filtered.get(0);
+    }
+
+    public void setNewOrderInfo(Order newStuff) {
+        Order existing = getOrder(newStuff.getId());
+        existing.setAll(newStuff);
     }
     @Override
     public String toString() {

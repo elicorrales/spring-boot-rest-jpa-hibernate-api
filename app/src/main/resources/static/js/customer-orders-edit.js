@@ -9,10 +9,10 @@ const onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateCustomerOrder = (event) =
     let id    = document.getElementById('editOrderIdInput').value;
     let number = document.getElementById('editOrderNumberInput').value;
     let description = document.getElementById('editDescriptionInput').value;
-    let dateOrdered = document.getElementById('editDateOrderedInput').value;
+    let dateCreated = document.getElementById('editDateCreatedInput').value;
     let status = document.getElementById('editStatusInput').value;
     axios.put('/customer/'+idOfCustomerSelectedFromList+'/order',
-             { customerId:idOfCustomerSelectedFromList, id, number, description, dateOrdered, status })
+             { customerId:idOfCustomerSelectedFromList, id, number, description, dateCreated, status })
     .then(
         result => {
             app.alerts.displayMessage('success','Order ' + number + '<br/>' + description + ' updated.');
@@ -31,7 +31,7 @@ const editOrder = (order) => {
     document.getElementById('editOrderIdInput').value = order.id;
     document.getElementById('editOrderNumberInput').value = order.number;
     document.getElementById('editDescriptionInput').value = order.description;
-    document.getElementById('editDateOrderedInput').value = order.dateOrdered;
+    document.getElementById('editDateCreatedInput').value = order.dateCreated;
     document.getElementById('editStatusInput').value = order.status;
 }
 

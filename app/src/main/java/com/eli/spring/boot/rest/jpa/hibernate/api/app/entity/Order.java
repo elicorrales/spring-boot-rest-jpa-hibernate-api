@@ -1,5 +1,7 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,8 +24,8 @@ public class Order {
     @Column(name="description")
     @NotEmpty(message="Description Required")
     private String description;
-    @Column(name="date_ordered")
-    private String dateOrdered;
+    @Column(name="date_created")
+    private Timestamp dateCreated;
     @Column(name="status")
     @NotEmpty(message="Status Required")
     private String status;
@@ -32,10 +34,10 @@ public class Order {
 
     public Order() {}
 
-    public Order(String number,String description, String dateOrdered,String status) {
+    public Order(String number,String description, Timestamp dateCreated, String status) {
         this.number = number;
         this.description = description;
-        this.dateOrdered = dateOrdered;
+        this.dateCreated = dateCreated;
         this.status = status;
     }
 
@@ -48,8 +50,8 @@ public class Order {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getDateOrdered() { return dateOrdered; }
-    public void setDateOrdered(String dateOrdered) { this.dateOrdered = dateOrdered; }
+    public Timestamp getDateCreated() { return dateCreated; }
+    public void setDateCreated(Timestamp dateCreated) { this.dateCreated = dateCreated; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
@@ -57,9 +59,14 @@ public class Order {
     public int getCustomerId() { return customerId; }
     public void setCustomerId(int customerId) { this.customerId = customerId; }
 
+    public void setAll(Order other) {
+        this.number = other.number;
+        this.description = other.description;
+        this.status = other.status;
+    }
     @Override
     public String toString() {
-        return "Order [customerId=" + customerId + ", dateOrdered=" + dateOrdered + ", description=" + description
+        return "Order [customerId=" + customerId + ", dateCreated=" + dateCreated + ", description=" + description
                 + ", id=" + id + ", number=" + number + ", status=" + status + "]";
     }
 

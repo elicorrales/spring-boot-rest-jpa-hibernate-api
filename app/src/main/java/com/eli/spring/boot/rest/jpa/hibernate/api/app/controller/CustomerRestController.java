@@ -1,5 +1,6 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -96,6 +97,9 @@ public class CustomerRestController {
             if (order.getNumber() == null || order.getNumber().isEmpty()) {
                 order.setNumber(createOrderNumber(customer,order));
             }
+            if (order.getDateCreated() == null || order.getDateCreated().getTime() == 0) {
+                order.setDateCreated(new Timestamp(new Date().getTime()));
+            }
             customer.addOrder(order);
             Customer updated = customerService.updateCustomer(customer);
             String message = "Updated customer " + customer + ", id = " + updated.getId();
@@ -115,16 +119,16 @@ public class CustomerRestController {
 
 
     @PutMapping("/{id}/order")
-    public ResponseEntity<?> editOrder(@PathVariable int id, @RequestBody Order order) {
-        System.err.println("\n\n\n edit order " + order + "  to cutomer id " + id + "\n\n\n");
+    public ResponseEntity<?> editOrder(@PathVariable int id, @RequestBody Order orderUpdate) {
+        System.err.println("\n\n\n edit order " + orderUpdate + "  to cutomer id " + id + "\n\n\n");
         try {
             Customer customer = customerService.getCustomer(id);
-            if (order.getNumber() == null || order.getNumber().isEmpty()) {
+            if (orderUpdate.getNumber() == null || orderUpdate.getNumber().isEmpty()) {
                 throw new IllegalArgumentException("Bad/Missing Order Number");
             }
-            customer.addOrder(order);
+            customer.setNewOrderInfo(orderUpdate);
             Customer updated = customerService.updateCustomer(customer);
-            String message = "Updated order " + order.getNumber() + ", id = " + updated.getId() + ", for Customer " + id;
+            String message = "Updated order " + orderUpdate.getNumber() + ", id = " + updated.getId() + ", for Customer " + id;
             return ResponseEntity.ok().body(message);
         } catch (ConstraintViolationException e) {
             e.printStackTrace(System.err);
@@ -141,11 +145,13 @@ public class CustomerRestController {
 
 
     @PutMapping
-    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
-        System.err.println("\n\n\n update customer " + customer + "\n\n\n");
+    public ResponseEntity<?> updateCustomer(@RequestBody Customer newStuff) {
+        System.err.println("\n\n\n update customer with " + newStuff + "\n\n\n");
         try {
-            Customer updated = customerService.updateCustomer(customer);
-            String message = "Updated customer " + customer + ", id = " + updated.getId();
+            Customer original = customerService.getCustomer(newStuff.getId());
+            original.setNewCustomerInfo(newStuff);
+            Customer updated = customerService.updateCustomer(original);
+            String message = "Updated customer " + newStuff + ", id = " + updated.getId();
             return ResponseEntity.ok().body(message);
         } catch (Exception e) {
             e.printStackTrace(System.err);
