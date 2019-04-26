@@ -21,7 +21,7 @@ const displayError = (error) => {
                     } else {
                         message += error.response.data;
                     }
-                } else {
+                } else if (!error.message) {
                     message += error.response;
                 }
             } else {

@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javassist.NotFoundException;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerRestController {
@@ -34,47 +36,45 @@ public class CustomerRestController {
     @Autowired
     private CustomerService customerService;
 
-    //@Autowired
-    //private OrderService orderService;
-
 
     @GetMapping
-    public ResponseEntity<?> getCustomers() {
+    public ResponseEntity<?> getCustomers() throws NotFoundException {
         System.err.println("\n\n\nget customers\n\n\n");
-        try {
+        //try {
             List<Customer> customers = customerService.findAll();
-            //return new ResponseEntity<>(customers,HttpStatus.OK);
             return ResponseEntity.ok().body(customers);
+        /*
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
-            //return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
+        */
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCustomer(@PathVariable int id) {
         System.err.println("\n\n\n get customer id " + id + "\n\n\n");
-        try {
+        //try {
             Customer customer = customerService.getCustomer(id);
-            //return new ResponseEntity<>(customer,HttpStatus.OK);
             return ResponseEntity.ok().body(customer);
+        /*
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
-            //return new ResponseEntity<>(new MessageResponse(t.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
+        */
     }
 
     @PostMapping
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         System.err.println("\n\n\n add customer " + customer + "\n\n\n");
-        try {
+        //try {
             int newCustomerId = customerService.addCustomer(customer);
             String message = "Added customer " + customer + ", id = " + newCustomerId + "\n";
             return ResponseEntity.ok().body(message);
+        /*
         } catch (ConstraintViolationException e) {
             e.printStackTrace(System.err);
             Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
@@ -86,13 +86,14 @@ public class CustomerRestController {
             Throwable t = ExceptionStackRootCause.getRootCause(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
+        */
     }
 
 
     @PostMapping("/{id}/order")
     public ResponseEntity<?> addOrder(@PathVariable int id, @RequestBody Order order) {
         System.err.println("\n\n\n add order " + order + "  to cutomer id " + id + "\n\n\n");
-        try {
+        //try {
             Customer customer = customerService.getCustomer(id);
             if (order.getNumber() == null || order.getNumber().isEmpty()) {
                 order.setNumber(createOrderNumber(customer,order));
@@ -104,6 +105,7 @@ public class CustomerRestController {
             Customer updated = customerService.updateCustomer(customer);
             String message = "Updated customer " + customer + ", id = " + updated.getId();
             return ResponseEntity.ok().body(message);
+        /*
         } catch (ConstraintViolationException e) {
             e.printStackTrace(System.err);
             Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
@@ -115,13 +117,14 @@ public class CustomerRestController {
             Throwable t = ExceptionStackRootCause.getRootCause(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
+        */
     }
 
 
     @PutMapping("/{id}/order")
     public ResponseEntity<?> editOrder(@PathVariable int id, @RequestBody Order orderUpdate) {
         System.err.println("\n\n\n edit order " + orderUpdate + "  to cutomer id " + id + "\n\n\n");
-        try {
+        //try {
             Customer customer = customerService.getCustomer(id);
             if (orderUpdate.getNumber() == null || orderUpdate.getNumber().isEmpty()) {
                 throw new IllegalArgumentException("Bad/Missing Order Number");
@@ -130,6 +133,7 @@ public class CustomerRestController {
             Customer updated = customerService.updateCustomer(customer);
             String message = "Updated order " + orderUpdate.getNumber() + ", id = " + updated.getId() + ", for Customer " + id;
             return ResponseEntity.ok().body(message);
+        /*
         } catch (ConstraintViolationException e) {
             e.printStackTrace(System.err);
             Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
@@ -141,37 +145,42 @@ public class CustomerRestController {
             Throwable t = ExceptionStackRootCause.getRootCause(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
+        */
     }
 
 
     @PutMapping
     public ResponseEntity<?> updateCustomer(@RequestBody Customer newStuff) {
         System.err.println("\n\n\n update customer with " + newStuff + "\n\n\n");
-        try {
+        //try {
             Customer original = customerService.getCustomer(newStuff.getId());
             original.setNewCustomerInfo(newStuff);
             Customer updated = customerService.updateCustomer(original);
             String message = "Updated customer " + newStuff + ", id = " + updated.getId();
             return ResponseEntity.ok().body(message);
+        /*
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
+        */
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable int id) {
         System.err.println("\n\n\n delete customer " + id + "\n\n\n");
-        try {
+        //try {
             customerService.deleteCustomer(id);
             String message = "Deleted customer  id = " + id;
             return ResponseEntity.ok().body(message);
+        /*
         } catch (Exception e) {
             e.printStackTrace(System.err);
             Throwable t = ExceptionStackRootCause.getRootCause(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
         }
+        */
     }
 
     private String createOrderNumber(Customer customer, Order order) {
