@@ -7,7 +7,12 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.model.MessageResponse;
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.utils.ExceptionStackRootCause;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,13 +22,24 @@ import javassist.NotFoundException;
 @ControllerAdvice
 public class ErrorAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<?> handleErrorDataIntegrityViolation(DataIntegrityViolationException e) {
+        System.err.println("\n\n\nhandleErrorDataIntegrityViolation(): " + e.getMessage()+ "\n\n\n");
+        Throwable t = ExceptionStackRootCause.getRootCause(e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(t.getMessage()));
+    }
+
+
     @ExceptionHandler({ConstraintViolationException.class})
-    public void handleErrorConstraintViolation(ConstraintViolationException e) {
+    public ResponseEntity<?> handleErrorConstraintViolation(ConstraintViolationException e) {
         System.err.println("\n\n\nhandleErrorConstraintViolation(): " + e.getMessage()+ "\n\n\n");
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-        List<String> messages = new ArrayList<>();
-        violations.stream().forEach( action -> { messages.add(action.getMessage()); });
+        if (violations != null && violations.size() > 0) {
+            List<String> messages = new ArrayList<>();
+            violations.stream().forEach( action -> { messages.add(action.getMessage()); });
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messages);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 
