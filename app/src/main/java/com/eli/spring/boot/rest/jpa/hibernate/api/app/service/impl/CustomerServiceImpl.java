@@ -1,7 +1,12 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.dto.CustomerDTO;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.repository.CustomerJpaRepository;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
@@ -17,6 +22,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+    @PersistenceContext
+    private EntityManager manager;
+
     @Autowired
     private CustomerJpaRepository repository;
 
@@ -26,10 +34,19 @@ public class CustomerServiceImpl implements CustomerService {
         return saved.getId();
     }
 
+/*
     @Override
     public List<Customer> findAll() {
         return repository.findAll();
     }
+*/
+
+    @Override
+    public List<CustomerDTO> findAll() {
+        List<Customer> customers = repository.findAll();
+        return customers.stream().map( c -> new CustomerDTO(c.getId(), c.getFname(), c.getLname(), c.getEmail())).collect(Collectors.toList());
+    }
+
 
     @Override
     public Page<Customer> findAll(int size, int page, Direction direction, String sortBy) {

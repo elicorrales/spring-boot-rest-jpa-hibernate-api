@@ -2,16 +2,30 @@ package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.EntityGraph;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Id;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+
+import com.eli.spring.boot.rest.jpa.hibernate.api.app.dto.CustomerDTO;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Order;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
+import com.mysql.cj.xdevapi.SessionFactory;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,12 +42,16 @@ public class CustomerRestController {
     @Autowired
     private CustomerService customerService;
 
+    @PersistenceContext
+    private EntityManager manager;
 
     @GetMapping
     public ResponseEntity<?> getCustomers() {
-        System.err.println("\n\n\nget customers\n\n\n");
-        //try {
-            List<Customer> customers = customerService.findAll();
+        System.err.println("\n\n\nget customers....");
+        // try {
+            //List<Customer> customers = customerService.findAll(); //this causes eager loading (or exception if open-in-view is false)
+            List<CustomerDTO> customers = customerService.findAll();
+            System.err.println("got customers\n\n\n");
             return ResponseEntity.ok().body(customers);
         /*
         } catch (Exception e) {
@@ -95,16 +113,20 @@ public class CustomerRestController {
 
     @PostMapping("/{id}/order")
     public ResponseEntity<?> addOrder(@PathVariable int id, @RequestBody Order order) {
-        System.err.println("\n\n\n add order " + order + "  to cutomer id " + id + "\n\n\n");
+        System.err.println("\n\n\n add order " + order + "  to cutomer id " + id );
         //try {
+            System.err.println("\tfirst, get customer for id...");
             Customer customer = customerService.getCustomer(id);
+            System.err.println("\tsecond, fix any issues with incoming new order...");
             if (order.getNumber() == null || order.getNumber().isEmpty()) {
                 order.setNumber(createOrderNumber(customer,order));
             }
             if (order.getDateCreated() == null || order.getDateCreated().getTime() == 0) {
                 order.setDateCreated(new Timestamp(new Date().getTime()));
             }
+            System.err.println("\tthird, add new order to customer object...");
             customer.addOrder(order);
+            System.err.println("\tfinally, update customer object (hibernate)...");
             Customer updated = customerService.updateCustomer(customer);
             String message = "Updated customer " + customer + ", id = " + updated.getId();
             return ResponseEntity.ok().body(message);

@@ -56,10 +56,10 @@ public class ErrorAdvice {
         System.err.println("\n\n\nhandleErrorNotFound(): " + e.getMessage()+ "\n\n\n");
     }
 
-    @ResponseStatus
     @ExceptionHandler({Exception.class})
-    public void handleErrorCatchAll(Exception e) {
+    public ResponseEntity<?> handleErrorCatchAll(Exception e) {
         System.err.println("\n\n\nhandleErrorCatchAll(): " + e.getMessage()+ "\n\n\n" + e.getClass().getSimpleName()+"\n\n\n");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(e.getMessage()));
     }
 
 }
