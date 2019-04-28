@@ -11,7 +11,7 @@ const onSubmitUpdateCustomerOrderBtnClickDoSubmitUpdateCustomerOrder = (event) =
     let description = document.getElementById('editDescriptionInput').value;
     let dateCreated = document.getElementById('editDateCreatedInput').value;
     let status = document.getElementById('editStatusInput').value;
-    axios.put('/customer/'+idOfCustomerSelectedFromList+'/order',
+    axios.put('/customers/'+idOfCustomerSelectedFromList+'/orders',
              { customerId:idOfCustomerSelectedFromList, id, number, description, dateCreated, status })
     .then(
         result => {

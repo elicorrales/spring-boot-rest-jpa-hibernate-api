@@ -40,6 +40,10 @@ public class Customer {
     @JoinColumn(name="customer_id")
     private List<Order> orders;
 
+    public Customer() {}
+
+    public Customer(String fname, String lname, String email) { this.fname = fname; this.lname = lname; this.email = email; }
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

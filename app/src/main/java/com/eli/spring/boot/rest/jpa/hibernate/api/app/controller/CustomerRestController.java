@@ -1,31 +1,22 @@
 package com.eli.spring.boot.rest.jpa.hibernate.api.app.controller;
 
+import java.net.URI;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Id;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.dto.CustomerDTO;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Customer;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.entity.Order;
 import com.eli.spring.boot.rest.jpa.hibernate.api.app.service.CustomerService;
-import com.mysql.cj.xdevapi.SessionFactory;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +24,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerRestController {
 
     @Autowired
@@ -49,52 +42,51 @@ public class CustomerRestController {
     public ResponseEntity<?> getCustomers() {
         System.err.println("\n\n\nget customers....");
         // try {
-            //List<Customer> customers = customerService.findAll(); //this causes eager loading (or exception if open-in-view is false)
-            List<CustomerDTO> customers = customerService.findAll();
-            System.err.println("got customers\n\n\n");
-            return ResponseEntity.ok().body(customers);
+        // List<Customer> customers = customerService.findAll(); //this causes eager
+        // loading (or exception if open-in-view is false)
+        List<CustomerDTO> customers = customerService.findAll();
+        System.err.println("got customers\n\n\n");
+        return ResponseEntity.ok().body(customers);
         /*
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-            Throwable t = ExceptionStackRootCause.getRootCause(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
-        }
-        */
+         * } catch (Exception e) { e.printStackTrace(System.err); Throwable t =
+         * ExceptionStackRootCause.getRootCause(e); return
+         * ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new
+         * MessageResponse(t.getMessage())); }
+         */
     }
 
-    @GetMapping("/{page}/{size}/{direction}/{sortBy}")
-    public ResponseEntity<?> getPageOfCustomers(
-                                @PathVariable int page, 
-                                @PathVariable int size, 
-                                @PathVariable String direction,
-                                @PathVariable String sortBy) {
+    @GetMapping(params = { "page", "size", "dir", "sort" })
+    public ResponseEntity<?> getPageOfCustomers(@RequestParam("page") int page, @RequestParam("size") int size,
+            @RequestParam("dir") String direction, @RequestParam("sort") String sortBy) {
         System.err.println("\n\n\nget customers (page)\n\n\n");
-        Page<Customer> customers = customerService.findAll(size, page, Direction.valueOf(direction), sortBy); 
+        Page<Customer> customers = customerService.findAll(size, page, Direction.valueOf(direction), sortBy);
         return ResponseEntity.ok().body(customers);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCustomer(@PathVariable int id) {
         System.err.println("\n\n\n get customer id " + id + "\n\n\n");
-        //try {
-            Customer customer = customerService.getCustomer(id);
-            return ResponseEntity.ok().body(customer);
+        // try {
+        Customer customer = customerService.getCustomer(id);
+        return ResponseEntity.ok().body(customer);
         /*
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-            Throwable t = ExceptionStackRootCause.getRootCause(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(t.getMessage()));
-        }
-        */
+         * } catch (Exception e) { e.printStackTrace(System.err); Throwable t =
+         * ExceptionStackRootCause.getRootCause(e); return
+         * ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new
+         * MessageResponse(t.getMessage())); }
+         */
     }
 
     @PostMapping
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         System.err.println("\n\n\n add customer " + customer + "\n\n\n");
-        //try {
-            int newCustomerId = customerService.addCustomer(customer);
-            String message = "Added customer " + customer + ", id = " + newCustomerId + "\n";
-            return ResponseEntity.ok().body(message);
+        // try {
+        int newCustomerId = customerService.addCustomer(customer);
+        String message = "Added customer " + customer + ", id = " + newCustomerId + "\n";
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newCustomerId).toUri();
+        System.err.println(location);
+        return ResponseEntity.created(location).build();
+        //return ResponseEntity.created(location).body(message);
         /*
         } catch (ConstraintViolationException e) {
             e.printStackTrace(System.err);

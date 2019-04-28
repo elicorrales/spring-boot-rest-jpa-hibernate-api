@@ -10,7 +10,7 @@ const onSubmitUpdateCustomerBtnClickDoSubmitUpdateCustomer = (event) => {
     let fname = document.getElementById('editFnameInput').value;
     let lname = document.getElementById('editLnameInput').value;
     let email = document.getElementById('editEmailInput').value;
-    axios.put('/customer', { id, fname, lname, email })
+    axios.put('/customers', { id, fname, lname, email })
     .then(
         result => {
             app.alerts.displayMessage('success','Customer ' + fname + ' ' + lname + ' updated.');

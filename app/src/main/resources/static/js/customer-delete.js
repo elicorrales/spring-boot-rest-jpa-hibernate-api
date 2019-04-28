@@ -9,7 +9,7 @@ const onSubmitDeleteCustomerBtnClickDoSubmitDeleteCustomer = (event) => {
     let id    = document.getElementById('deleteIdInput').value;
     let fname = document.getElementById('deleteFnameInput').value;
     let lname = document.getElementById('deleteLnameInput').value;
-    axios.delete('/customer/' + id)
+    axios.delete('/customers/' + id)
     .then(
         result => {
             app.alerts.displayMessage('success','Customer ' + fname + ' ' + lname + ' deleted.');

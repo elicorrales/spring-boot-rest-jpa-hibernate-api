@@ -9,7 +9,7 @@ const onSubmitDeleteCustomerOrderBtnClickDoSubmitDeleteCustomerOrder = (event) =
     let id    = document.getElementById('deleteOrderIdInput').value;
     let number = document.getElementById('deleteOrderNumberInput').value;
     let description = document.getElementById('deleteDescriptionInput').value;
-    axios.delete('/order/' + id)
+    axios.delete('/orders/' + id)
     .then(
         result => {
             app.alerts.displayMessage('success','Order ' + number + '<br/>' + description + ' deleted.');

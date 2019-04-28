@@ -33,7 +33,7 @@ const displayCustomerOrdersList = (orders) => {
 }
 
 const getCustomerOrdersList = () => {
-    axios.get('/order/customer/'+idOfCustomerSelectedFromList)
+    axios.get('/orders/customers/'+idOfCustomerSelectedFromList)
     .then(
         result => {
             //app.alerts.displayMessage('success','Got Customers..');

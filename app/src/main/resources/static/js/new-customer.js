@@ -9,7 +9,7 @@ const onSubmitNewCustomerBtnClickDoSubmitNewCustomer = (event) => {
     let fname = fnameInputElem.value;
     let lname = lnameInputElem.value;
     let email = emailInputElem.value;
-    axios.post('/customer', { fname, lname, email })
+    axios.post('/customers', { fname, lname, email })
     .then(
         result => {
             app.alerts.displayMessage('success','New Customer ' + fname + ' ' + lname + ' added.');

@@ -35,7 +35,7 @@ const displayCustomerList = (customers) => {
 }
 
 const getCustomerList = () => {
-    axios.get('/customer')
+    axios.get('/customers')
     .then(
         result => {
             //app.alerts.displayMessage('success','Got Customers..');

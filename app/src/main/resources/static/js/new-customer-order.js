@@ -11,7 +11,7 @@ const onSubmitNewCustomerOrderBtnClickDoSubmitNewCustomerOrder = (event) => {
     let description = descriptionInputElem.value;
     //let dateCreated = dateCreatedInputElem.value; //let server set date
     let status = statusInputElem.value;
-    axios.post('/customer/'+idOfCustomerSelectedFromList+'/order', { number, description, status })
+    axios.post('/customers/'+idOfCustomerSelectedFromList+'/orders', { number, description, status })
     .then(
         result => {
             app.alerts.displayMessage('success','New Customer Order' + number + ' added.');
