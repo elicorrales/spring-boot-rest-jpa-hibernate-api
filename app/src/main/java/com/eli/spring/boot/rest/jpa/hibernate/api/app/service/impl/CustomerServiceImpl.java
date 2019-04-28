@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> findAll() {
         List<Customer> customers = repository.findAll();
-        return customers.stream().map( c -> new CustomerDTO(c.getId(), c.getFname(), c.getLname(), c.getEmail())).collect(Collectors.toList());
+        return customers.stream().map( c -> new CustomerDTO(c)).collect(Collectors.toList());
     }
 
 
@@ -83,4 +83,16 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(int id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public void deleteAllCustomers() {
+        repository.deleteAll();
+    }
+
+    @Override
+    public long getNumberOfCustomers() {
+        return repository.count();
+    }
+
+
 }

@@ -17,4 +17,6 @@ public interface CustomerService {
     Customer getCustomer(int id);
     Customer updateCustomer(Customer customer);
     void deleteCustomer(int id);
+    void deleteAllCustomers();
+	long getNumberOfCustomers();
 }
