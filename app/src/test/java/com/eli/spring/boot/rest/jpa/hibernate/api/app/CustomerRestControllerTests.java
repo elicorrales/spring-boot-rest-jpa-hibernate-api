@@ -258,7 +258,7 @@ public class CustomerRestControllerTests {
 
 
     @Test
-    public void test8_getPagedCustomersTwoPages() throws Exception {
+    public void test8_getPagedCustomersTwoPagesGetFirstPage() throws Exception {
         int numCustomers = 100;
         int sizeRequested = 50;
         deleteAll();
@@ -268,7 +268,7 @@ public class CustomerRestControllerTests {
         MockHttpServletRequestBuilder getPagedCustomers = MockMvcRequestBuilders.get("/customers?page=0&size="+sizeRequested+"&dir=ASC&sort=id")
                                                             .contentType(MediaType.APPLICATION_JSON)
                                                             .accept(MediaType.APPLICATION_JSON);
-        /*MvcResult result =*/ mockMvc.perform(getPagedCustomers)
+        mockMvc.perform(getPagedCustomers)
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$").exists())
@@ -278,28 +278,120 @@ public class CustomerRestControllerTests {
                 .andExpect(jsonPath("$.totalPages").value("2"))
                 .andExpect(jsonPath("$.totalElements").exists())
                 .andExpect(jsonPath("$.totalElements").value(numCustomers))
+                .andExpect(jsonPath("$.numberOfElements").exists())
+                .andExpect(jsonPath("$.numberOfElements").value(sizeRequested))
                 .andExpect(jsonPath("$.first").exists())
                 .andExpect(jsonPath("$.first").value("true"))
                 .andExpect(jsonPath("$.last").exists())
                 .andExpect(jsonPath("$.last").value("false"))
                 .andExpect(jsonPath("$.number").exists())
                 .andExpect(jsonPath("$.number").value("0"))
-                //.andReturn()
                 ;
-        /*
-        String contentAsString = result.getResponse().getContentAsString();
-        System.err.println("\n\n\n\ncontentAsString:");
-        System.err.println(contentAsString);
-        System.err.println("\n\n\n\n");
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(contentAsString);
-        String content = node.get("content").asText();
-        System.err.println("\n\n\n\ncontent:");
-        System.err.println(content);
-        System.err.println("\n\n\n\n");
-        List<Customer> customers = mapper.readValue(content, new TypeReference<List<Customer>>(){});
-        assertTrue(customers.size() == 2);
-        */
+    }
+
+
+    @Test
+    public void test9_getPagedCustomersTwoPagesGetFirstPage() throws Exception {
+        int numCustomers = 100;
+        int sizeRequested = 50;
+        int pageRequested = 1;
+        deleteAll();
+        checkNumber(0);
+        createMany(numCustomers);
+        checkNumber(numCustomers);
+        MockHttpServletRequestBuilder getPagedCustomers = 
+                        MockMvcRequestBuilders.get("/customers?page="+pageRequested+"&size="+sizeRequested+"&dir=ASC&sort=id")
+                                                            .contentType(MediaType.APPLICATION_JSON)
+                                                            .accept(MediaType.APPLICATION_JSON);
+        mockMvc.perform(getPagedCustomers)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.content").exists())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.totalPages").exists())
+                .andExpect(jsonPath("$.totalPages").value("2"))
+                .andExpect(jsonPath("$.totalElements").exists())
+                .andExpect(jsonPath("$.totalElements").value(numCustomers))
+                .andExpect(jsonPath("$.numberOfElements").exists())
+                .andExpect(jsonPath("$.numberOfElements").value(sizeRequested))
+                .andExpect(jsonPath("$.first").exists())
+                .andExpect(jsonPath("$.first").value("false"))
+                .andExpect(jsonPath("$.last").exists())
+                .andExpect(jsonPath("$.last").value("true"))
+                .andExpect(jsonPath("$.number").exists())
+                .andExpect(jsonPath("$.number").value("1"))
+                ;
+    }
+
+
+    @Test
+    public void test10_getPagedCustomersThreePagesGetMiddlePage() throws Exception {
+        int numCustomers = 99;
+        int sizeRequested = 33;
+        int pageRequested = 1;
+        deleteAll();
+        checkNumber(0);
+        createMany(numCustomers);
+        checkNumber(numCustomers);
+        MockHttpServletRequestBuilder getPagedCustomers = 
+                        MockMvcRequestBuilders.get("/customers?page="+pageRequested+"&size="+sizeRequested+"&dir=ASC&sort=id")
+                                                            .contentType(MediaType.APPLICATION_JSON)
+                                                            .accept(MediaType.APPLICATION_JSON);
+        mockMvc.perform(getPagedCustomers)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.content").exists())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.totalPages").exists())
+                .andExpect(jsonPath("$.totalPages").value("3"))
+                .andExpect(jsonPath("$.totalElements").exists())
+                .andExpect(jsonPath("$.totalElements").value(numCustomers))
+                .andExpect(jsonPath("$.numberOfElements").exists())
+                .andExpect(jsonPath("$.numberOfElements").value(sizeRequested))
+                .andExpect(jsonPath("$.first").exists())
+                .andExpect(jsonPath("$.first").value("false"))
+                .andExpect(jsonPath("$.last").exists())
+                .andExpect(jsonPath("$.last").value("false"))
+                .andExpect(jsonPath("$.number").exists())
+                .andExpect(jsonPath("$.number").value("1"))
+                ;
+    }
+
+
+    @Test
+    public void test11_getPagedCustomersThreePagesGetFourthNonExistentPage() throws Exception {
+        int numCustomers = 99;
+        int sizeRequested = 33;
+        int pageRequested = 3;
+        deleteAll();
+        checkNumber(0);
+        createMany(numCustomers);
+        checkNumber(numCustomers);
+        MockHttpServletRequestBuilder getPagedCustomers = 
+                        MockMvcRequestBuilders.get("/customers?page="+pageRequested+"&size="+sizeRequested+"&dir=ASC&sort=id")
+                                                            .contentType(MediaType.APPLICATION_JSON)
+                                                            .accept(MediaType.APPLICATION_JSON);
+        mockMvc.perform(getPagedCustomers)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.content").exists())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.totalPages").exists())
+                .andExpect(jsonPath("$.totalPages").value("3"))
+                .andExpect(jsonPath("$.totalElements").exists())
+                .andExpect(jsonPath("$.totalElements").value(numCustomers))
+                .andExpect(jsonPath("$.numberOfElements").exists())
+                .andExpect(jsonPath("$.numberOfElements").value(0))
+                .andExpect(jsonPath("$.first").exists())
+                .andExpect(jsonPath("$.first").value("false"))
+                .andExpect(jsonPath("$.last").exists())
+                .andExpect(jsonPath("$.last").value("true"))
+                .andExpect(jsonPath("$.number").exists())
+                .andExpect(jsonPath("$.number").value("3"))
+                ;
     }
 
 
