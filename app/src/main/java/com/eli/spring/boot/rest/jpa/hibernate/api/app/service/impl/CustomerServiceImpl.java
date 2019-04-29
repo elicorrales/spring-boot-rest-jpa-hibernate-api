@@ -49,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public Page<Customer> findAll(int size, int page, Direction direction, String sortBy) {
+    public Page<Customer> findAllPaged(int page, int size, Direction direction, String sortBy) {
         Sort sort = null;
         switch (direction) {
             case DESC:

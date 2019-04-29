@@ -21,9 +21,9 @@ public class CustomerDTO {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public CustomerDTO(Customer customer) {
-        this.id = customer.getId(); this.fname = customer.getFname(); this.lname = customer.getLname(); this.email = customer.getEmail();
-    }
+    public CustomerDTO() {}
+    public CustomerDTO(int id, String fname, String lname, String email) { this.id = id; this.fname = fname; this.lname = lname; this.email = email; }
+    public CustomerDTO(Customer customer) { this.id = customer.getId(); this.fname = customer.getFname(); this.lname = customer.getLname(); this.email = customer.getEmail(); }
 
     @Override
     public String toString() {

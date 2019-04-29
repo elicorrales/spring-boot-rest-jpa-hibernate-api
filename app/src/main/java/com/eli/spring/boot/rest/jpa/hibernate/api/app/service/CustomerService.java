@@ -12,7 +12,7 @@ public interface CustomerService {
     int addCustomer(Customer customer);
     //List<Customer> findAll();
     List<CustomerDTO> findAll();
-    public Page<Customer> findAll(int size, int page, Direction direction, String properties); 
+    public Page<Customer> findAllPaged(int page, int size, Direction direction, String properties); 
     List<Customer> findAllMatching();
     Customer getCustomer(int id);
     Customer updateCustomer(Customer customer);

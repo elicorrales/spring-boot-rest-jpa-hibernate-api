@@ -59,7 +59,7 @@ public class CustomerRestController {
     public ResponseEntity<?> getPageOfCustomers(@RequestParam("page") int page, @RequestParam("size") int size,
             @RequestParam("dir") String direction, @RequestParam("sort") String sortBy) {
         System.err.println("\n\n\nget customers (page)\n\n\n");
-        Page<Customer> customers = customerService.findAll(size, page, Direction.valueOf(direction), sortBy);
+        Page<Customer> customers = customerService.findAllPaged(page, size, Direction.valueOf(direction), sortBy);
         return ResponseEntity.ok().body(customers);
     }
 
@@ -167,8 +167,8 @@ public class CustomerRestController {
         Customer original = customerService.getCustomer(newStuff.getId());
         original.setNewCustomerInfo(newStuff);
         Customer updated = customerService.updateCustomer(original);
-        String message = "Updated customer " + newStuff + ", id = " + updated.getId();
-        return ResponseEntity.ok().body(message);
+        //String message = "Updated customer " + newStuff + ", id = " + updated.getId();
+        return ResponseEntity.ok().body(new CustomerDTO(updated));
         /*
          * } catch (Exception e) { e.printStackTrace(System.err); Throwable t =
          * ExceptionStackRootCause.getRootCause(e); return
@@ -182,8 +182,8 @@ public class CustomerRestController {
         System.err.println("\n\n\n delete customer " + id + "\n\n\n");
         // try {
         customerService.deleteCustomer(id);
-        String message = "Deleted customer  id = " + id;
-        return ResponseEntity.ok().body(message);
+        //String message = "Deleted customer  id = " + id;
+        return ResponseEntity.ok().build();
         /*
          * } catch (Exception e) { e.printStackTrace(System.err); Throwable t =
          * ExceptionStackRootCause.getRootCause(e); return
